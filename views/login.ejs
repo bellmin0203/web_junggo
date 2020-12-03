@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- include('./layout/head') %>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <%- include('./layout/header') %>
+    </header>
+    <div>
+      <img class="login-logo" src="/img/logo.png" alt="로고">
+      <form>
+        <input type="email" class="form-control login-input" id="exampleInputEmail1" placeholder="아이디">
+        <input type="password" class="form-control login-input" id="exampleInputPassword" placeholder="비밀번호">
+        <button type="button" class="btn btn-primary login-button">로그인</button>
+        <button type="button" class="btn btn-primary login-button">회원가입</button>
+      </form>
+
+    </div>
+
+
+    <footer>
+      <%- include('./layout/footer') %>
+    </footer>
+  </div>
+</body>
+</html>
