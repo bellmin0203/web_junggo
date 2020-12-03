@@ -4,10 +4,22 @@
   <%- include('./layout/head') %>
 </head>
 <body>
-  <div class="wrap">
+  <div id="wrap">
+    <!-- header -->
     <header>
       <%- include('./layout/header') %>
     </header>
+    <!-- section.search -->
+    <section class="main">
+      <div class="search">
+        <input type="text" name="input-word" id="search-box" placeholder="검색어를 입력해주세요.">
+        <h2>인기 검색어</h2>
+      </div>
+      <div class="top-search">
+        <p>모자<br>자전거<br>킥보드<br>모니터</p>
+      </div>
+    </section>
+
 
     <footer>
       <%- include('./layout/footer') %>
