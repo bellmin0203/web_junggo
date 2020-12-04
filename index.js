@@ -3,7 +3,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
-const PORT = 54300;
+const PORT = 80;
 dotenv.config({ path: path.join(process.cwd(), 'config', '.env.development') });
 
 const db = require('./lib/db');
