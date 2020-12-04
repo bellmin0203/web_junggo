@@ -10,17 +10,14 @@
     </header>
     <div>
       <img class="login-logo" src="/img/logo.png" alt="로고">
-      <form>
-        <input type="password" class="form-control login-input" placeholder="아이디를 입력하세요">
-        <input type="password" class="form-control login-input" placeholder="비밀번호를 입력하세요">
+      <form action="#" method="POST">
+        <input type="id" class="form-control login-input" placeholder="아이디를 입력하세요" name="id">
+        <input type="password" class="form-control login-input" placeholder="비밀번호를 입력하세요" name="pw">
         <input type="password" class="form-control login-input" placeholder="비밀번호를 다시 입력하세요">
-        <input type="password" class="form-control login-input" placeholder="닉네임을 입력하세요">
-        <button type="button" class="btn btn-primary login-button">완료</button>
+        <input type="text" class="form-control login-input" placeholder="닉네임을 입력하세요" name="nickname">
+        <button type="submit" class="btn btn-primary login-button">완료</button>
       </form>
-
     </div>
-
-
     <footer>
       <%- include('./layout/footer') %>
     </footer>
