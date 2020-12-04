@@ -8,8 +8,12 @@
     <li><a href="/goods">매물목록</a></li>
     <li><a href="/my">내 매물</a></li>
   </ul>
-  <ul class="navbar__userBtn">
-    <li><a href="/login">로그인</a></li>
-    <li><a href="/signup">회원가입</a></li>
-    </div>
+  <% if(token) { %>
+      <button type="button" onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
+  <% } else { %>
+    <ul class="navbar__userBtn">
+      <li><a href="/login">로그인</a></li>
+      <li><a href="/signup">회원가입</a></li>
+    </ul>
+  <% } %>
 </nav>

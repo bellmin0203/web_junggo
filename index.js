@@ -9,14 +9,17 @@ const db = require('./lib/db');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+const cookieParser = require('cookie-parser');
 
+const app = express();
+app.disable('view cache');
 // router
 const router = require('./router');
 
 //bodyParser
 app.use(bodyParser.json())
 app.use(express.urlencoded( {extended : false } ));
+app.use(cookieParser());
 
 // 뷰엔진 설정
 app.set('view engine', 'ejs');
