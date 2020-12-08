@@ -14,6 +14,7 @@ router.post('/signup', login.signupMiddleware, (req, res) => res.render('signup'
 
 router.get('/notice', (req, res) => res.render('noticeList', {page: 'noticeList',token:req.cookies.token}));
 router.get('/notice/:no',(req, res) => res.render('noticeDetail', {page: 'noticeDetail',token:req.cookies.token}));
+// router.post('/noticeWrite', board.writeMiddleware (req, res) => res.render('write', {page: 'write', token:req.cookies.token}));
 router.get('/goods', (req, res) => res.render('goodsList', {page: 'goodsList'}));
 router.get('/goods/:no', (req, res) => res.render('goodsDetail', {page: 'goodsDetail',token:req.cookies.token}));
 router.get('/my',(req, res) => res.render('my', {page: 'my'}));

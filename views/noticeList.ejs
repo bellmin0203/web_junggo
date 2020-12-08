@@ -1,19 +1,68 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <%- include('./layout/head') %>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <%- include('./layout/header') %>
-    </header>
-    <div>
-      notice List
+  <head>
+    <%- include('./layout/head') %>
+  </head>
+  <body>
+    <div class="wrap">
+      <header><%- include('./layout/header') %></header>
+      <div class="container">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" class="text-center">번호</th>
+              <th scope="col" class="text-center">제목</th>
+              <th scope="col" class="text-center">작성자</th>
+              <th scope="col" class="text-center">날짜</th>
+              <th scope="col" class="text-center">조회수</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="text-center">
+              <td>101</td>
+              <td>평화나라 공지사항</td>
+              <td>관리자</td>
+              <td>20.12.08</td>
+              <td>2</td>
+            </tr>
+            <tr class="text-center">
+              <td style="width: 10%">100</td>
+              <td style="width: 60%">평화나라 공지사항2</td>
+              <td style="width: 10%">관리자</td>
+              <td style="width: 10%">20.12.08</td>
+              <td style="width: 10%">20</td>
+            </tr>
+            <tr class="text-center">
+              <td>99</td>
+              <td>평화나라 공지사항3</td>
+              <td>관리자</td>
+              <td>20.12.08</td>
+              <td>24</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+
+        <form
+          class="form-inline justify-content-end"
+          action="/noticeWrite"
+          method="post"
+        >
+          <button type="submit" class="btn btn-secondary mb-3 text-right">
+            글쓰기
+          </button>
+        </form>
+
+        <ul class="pagination pagination-sm justify-content-center">
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">5</a></li>
+        </ul>
+      </div>
+
+      <footer><%- include('./layout/footer') %></footer>
     </div>
-    <footer>
-      <%- include('./layout/footer') %>
-    </footer>
-  </div>
-</body>
+  </body>
 </html>
