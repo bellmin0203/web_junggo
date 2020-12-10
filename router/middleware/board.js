@@ -25,7 +25,6 @@ module.exports.noticeListMiddleware = (req, res, next) => {
     const rows = db.query(sql);
     var tempRows;
     const writerRows = [];
-    console.log(rows);
 
     rows.forEach(function(item){
       sql = "SELECT nickname FROM USER WHERE no = ?;";
@@ -40,7 +39,7 @@ module.exports.noticeListMiddleware = (req, res, next) => {
 module.exports.noticeDetailMiddleware = (req, res, next) => {
   var sql = "SELECT * FROM NOTICE WHERE no = ?";
   const rows = db.query(sql, [req.params.no]);
-  console.log(rows);
+  console.log(rows[0].title);
   if(rows.length == 1){
     try{
       res.render("noticeDetail", { title: rows[0].title+" - 공지사항 - 평화나라", page: "noticeDetail", rows: rows, token: req.cookies.token })
@@ -49,5 +48,12 @@ module.exports.noticeDetailMiddleware = (req, res, next) => {
       res.status(500).send("Server Error!");
     }
   } else res.status(404).send("File Not Found");
+  next();
+}
+
+module.exports.noticeDeleteMiddleware = (req, res, next) => {
+  var sql = "DELETE FROM NOTICE WHERE no = ?";
+  const rows = db.query(sql, [req.params.no]);
+  return res.redirect(301,'/notice');
   next();
 }
