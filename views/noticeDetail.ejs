@@ -24,11 +24,13 @@
             </tbody>
           </table>
         </div>
+        <% if(writer){ %>
         <form action="/notice/<%= rows[0].no %>?_method=DELETE" method="POST">
           <div class="form-group d-flex justify-content-end">
             <input type="submit" class="btn btn-danger" value="삭제" />
           </div>
         </form>
+        <% } %>
       </div>
       <footer><%- include('./layout/footer') %></footer>
     </div>
