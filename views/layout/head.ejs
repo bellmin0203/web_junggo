@@ -1,6 +1,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>평화나라 - 중고 거래 사이트</title>
+<title><%= title %></title>
 <link
   rel="stylesheet"
   href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -29,19 +29,23 @@
   src="https://kit.fontawesome.com/7fd3939f45.js"
   crossorigin="anonymous"
 ></script>
+
 <script type="text/javascript" src="/js/jqcloud-1.0.4.js"></script>
+
+<script src="/js/summernote-lite.js"></script>
+<script src="/js/summernote-ko-KR.js"></script>
 
 <script type="text/javascript">
   var word_array = [
-    { text: "Lorem", weight: 20 },
+    { text: "Lorem", weight: 20, link: "#" },
     { text: "Ipsum", weight: 14, link: "http://jquery.com/" },
     {
       text: "Dolor",
       weight: 11,
-      html: { title: "I can haz any html attribute" },
+      link: "#",
     },
-    { text: "Sit", weight: 12 },
-    { text: "Amet", weight: 10 },
+    { text: "Sit", weight: 12, link: "#" },
+    { text: "Amet", weight: 10, link: "#" },
     // ...as many words as you want
   ];
 

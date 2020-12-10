@@ -25,24 +25,11 @@ body {
   font-size: larger;
   font-weight: bold;
 }
-.navbar__userBtn {
-  display: flex;
-}
 .navbar__userBtn li:first-child {
   margin-right: 8px;
 }
 /* section.search */
-.search__box {
-  text-align: center;
-  margin: 32px 0;
-}
-#search-box {
-  font-size: 24px;
-  padding: 4px 8px;
-}
-#word-cloud {
-    margin: 0 auto;
-}
+
 /* search.goods__list */
 @import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800&display=swap");
 .product-list {

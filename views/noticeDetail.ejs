@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <%- include('./layout/head') %>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <%- include('./layout/header') %>
-    </header>
-    <div>
-      notice detail
-      글번호 : <%= no %>
+  <head>
+    <%- include('./layout/head') %>
+  </head>
+  <body>
+    <div class="wrap">
+      <header><%- include('./layout/header') %></header>
+      <div class="container" style="height: 600px;">
+        <div class="row h-100">
+          <table class="table table-bordered h-75">
+            <thead>
+              <tr class="table-active">
+                <th scope="col" style="width: 60%"><%= rows[0].title %></th>
+                <th scope="col" style="width: 40%" class="text-right">
+                  <%= rows[0].dtCreate %>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="2" class="p-5">
+                  <%- rows[0].content %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <footer><%- include('./layout/footer') %></footer>
     </div>
-    <footer>
-      <%- include('./layout/footer') %>
-    </footer>
-  </div>
-</body>
+  </body>
 </html>

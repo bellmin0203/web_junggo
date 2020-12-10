@@ -1,176 +1,207 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <%- include('./layout/head') %>
-</head>
-<body>
-  <div id="wrap">
-    <!-- header -->
-    <header>
-      <%- include('./layout/header') %>
-    </header>
-    <!-- section.search -->
-    <section class="search container">
-        <div class="row justify-content-md-center">
-          <div class="search__box col-md-6">
-            <input class="form-control" type="search" name="input_word" id="search-box" placeholder="검색어를 입력해주세요.">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-auto col-sm-auto" id="word-cloud" style="width: 70%; height: 350px;"></div>
-        </div>
-    </section>
-    <!-- section.goods__list -->
-    <section class="goods__list container mt-5">
-      <h2 class="mb-3" style="text-align: center; font-weight: bold;">최근 중고 매물</h2>
-      <hr>
-      <div class="product-list">
-        <div class="row mb-3">
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">Asus X552CL-SX019D Laptop</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 32,000 
-                </div>
-                <a href="#" class="blue-btn">Add to cart</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/81nreGN5qQL._SL1500_.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">ASUS X507 Core i5 - 8th Gen 15.6"</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 30,000 
-                </div>
-                <a href="#" class="blue-btn">Add to cart</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/81RrcHvDGbL._SY355_.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">ASUS VivoBook S400CA</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 45,000 
-                </div>
-                <a href="#" class="blue-btn">Add to cart</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://cdn.mos.cms.futurecdn.net/kwP2nL8FAVboognXmW6nvP-320-80.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">Asus laptops</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 50,000 
-                </div>
-                <a href="#" class="blue-btn">Add to cart</a>
-              </div>
+  <head>
+    <%- include('./layout/head') %>
+  </head>
+  <body>
+    <div id="wrap">
+      <!-- header -->
+      <header><%- include('./layout/header') %></header>
+      <!-- section.search -->
+      <section class="container">
+        <div class="row justify-content-center m-4">
+          <div class="input-group col-md-6">
+            <input
+              type="text"
+              name="input-word"
+              class="form-control"
+              placeholder="검색어를 입력해주세요."
+            />
+            <div class="input-group-append">
+              <button class="btn btn-secondary" type="button">
+                <i class="fa fa-search"></i>
+              </button>
             </div>
           </div>
         </div>
-        <div class="row mb-3">
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">Asus X552CL-SX019D Laptop</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 32,000 
+        <div class="row justify-content-center">
+          <div
+            class="col-6"
+            id="word-cloud"
+            style="height: 350px"
+          ></div>
+        </div>
+      </section>
+      <!-- section.goods__list -->
+      <section class="goods__list container mt-3">
+        <h2 class="mb-3" style="text-align: center; font-weight: bold">
+          최근 중고 매물
+        </h2>
+        <hr />
+        <div class="product-list">
+          <div class="row mb-3">
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
                 </div>
-                <a href="#" class="blue-btn">Add to cart</a>
+                <div class="product-img">
+                  <img
+                    src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">Asus X552CL-SX019D Laptop</div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 32,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="product-img">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/I/81nreGN5qQL._SL1500_.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">
+                    ASUS X507 Core i5 - 8th Gen 15.6"
+                  </div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 30,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="product-img">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/I/81RrcHvDGbL._SY355_.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">ASUS VivoBook S400CA</div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 45,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="product-img">
+                  <img
+                    src="https://cdn.mos.cms.futurecdn.net/kwP2nL8FAVboognXmW6nvP-320-80.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">Asus laptops</div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 50,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/81nreGN5qQL._SL1500_.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">ASUS X507 Core i5 - 8th Gen 15.6"</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 30,000 
+          <div class="row mb-3">
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
                 </div>
-                <a href="#" class="blue-btn">Add to cart</a>
+                <div class="product-img">
+                  <img
+                    src="https://www.91-img.com/pictures/laptops/asus/asus-x552cl-sx019d-core-i3-3rd-gen-4-gb-500-gb-dos-1-gb-61721-large-1.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">Asus X552CL-SX019D Laptop</div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 32,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://images-na.ssl-images-amazon.com/images/I/81RrcHvDGbL._SY355_.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">ASUS VivoBook S400CA</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 45,000 
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
                 </div>
-                <a href="#" class="blue-btn">Add to cart</a>
+                <div class="product-img">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/I/81nreGN5qQL._SL1500_.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">
+                    ASUS X507 Core i5 - 8th Gen 15.6"
+                  </div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 30,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-3 col-sm-6">
-            <div class="white-box">
-              <div class="wishlist-icon">
-                <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
-              </div>
-              <div class="product-img">
-                <img src="https://cdn.mos.cms.futurecdn.net/kwP2nL8FAVboognXmW6nvP-320-80.jpg">
-              </div>
-              <div class="product-bottom">
-                <div class="product-name">Asus laptops</div>
-                <div class="price">
-                  <i class="fas fa-won-sign"></i> 50,000 
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
                 </div>
-                <a href="#" class="blue-btn">Add to cart</a>
+                <div class="product-img">
+                  <img
+                    src="https://images-na.ssl-images-amazon.com/images/I/81RrcHvDGbL._SY355_.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">ASUS VivoBook S400CA</div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 45,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="white-box">
+                <div class="wishlist-icon">
+                  <a href="javascript:void(0);"><i class="far fa-heart"></i></a>
+                </div>
+                <div class="product-img">
+                  <img
+                    src="https://cdn.mos.cms.futurecdn.net/kwP2nL8FAVboognXmW6nvP-320-80.jpg"
+                  />
+                </div>
+                <div class="product-bottom">
+                  <div class="product-name">Asus laptops</div>
+                  <div class="price">
+                    <i class="fas fa-won-sign"></i> 50,000
+                  </div>
+                  <a href="#" class="blue-btn">Add to cart</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      
-    </section>
-    <footer>
-      <%- include('./layout/footer') %>
-    </footer>
-  </div>
-</body>
+      </section>
+      <footer><%- include('./layout/footer') %></footer>
+    </div>
+  </body>
 </html>

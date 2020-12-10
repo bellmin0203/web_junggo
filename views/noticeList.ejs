@@ -6,7 +6,7 @@
   <body>
     <div class="wrap">
       <header><%- include('./layout/header') %></header>
-      <div class="container">
+      <div class="container" style="height: 550px;">
         <table class="table table-hover">
           <thead class="thead-dark">
             <tr>
@@ -18,47 +18,39 @@
             </tr>
           </thead>
           <tbody>
+            <% for(var i = 0; i < rows.length; i++){ var data = rows[i]; %>
             <tr class="text-center">
-              <td>101</td>
-              <td>평화나라 공지사항</td>
-              <td>관리자</td>
-              <td>20.12.08</td>
-              <td>2</td>
+              <td scope="rows"><%= data.no %></td>
+              <td style="width: 60%">
+                <a style="color: #333" href="/notice/<%= data.no %>"
+                  ><%= data.title %></a
+                >
+              </td>
+              <td><%= writerRows[i] %></td>
+              <td><%= data.dtCreate %></td>
+              <td><%= data.no %></td>
             </tr>
-            <tr class="text-center">
-              <td style="width: 10%">100</td>
-              <td style="width: 60%">평화나라 공지사항2</td>
-              <td style="width: 10%">관리자</td>
-              <td style="width: 10%">20.12.08</td>
-              <td style="width: 10%">20</td>
-            </tr>
-            <tr class="text-center">
-              <td>99</td>
-              <td>평화나라 공지사항3</td>
-              <td>관리자</td>
-              <td>20.12.08</td>
-              <td>24</td>
-            </tr>
+            <%}%>
           </tbody>
         </table>
-        <hr />
-
-        <form
-          class="form-inline justify-content-end"
-          action="/noticeWrite"
-          method="post"
-        >
-          <button type="submit" class="btn btn-secondary mb-3 text-right">
-            글쓰기
-          </button>
-        </form>
+        <div class="d-flex justify-content-end">
+          <a href="/noticeWrite" class="btn btn-secondary mb-3">글쓰기</a>
+        </div>
 
         <ul class="pagination pagination-sm justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous"
+              ><span aria-hidden="true">&laquo;</span></a
+            >
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
           <li class="page-item"><a class="page-link" href="#">2</a></li>
           <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next"
+              ><span aria-hidden="true">&raquo;</span></a
+            >
+          </li>
         </ul>
       </div>
 

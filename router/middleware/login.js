@@ -6,9 +6,7 @@ module.exports.loginMiddleware = function(req, res, next){
     const id = req.body.id;
     const pw = req.body.pw;
     console.log(id);
-    console.log(pw);
     const hash = crypto.hash(pw);
-    console.log(hash);
     const rows = db.query("SELECT no,id,nickname,grade,date_format(dtCreate, '%Y-%m-%d') `dtCreate` FROM USER WHERE id=? AND pw=?",[id,hash]);
     console.log(rows);
     const token = jwt.createAccessToken(rows[0].no,rows[0].id,rows[0].nickname,rows[0].grade,rows[0].dtCreate);
