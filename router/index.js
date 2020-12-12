@@ -3,7 +3,10 @@ const multer = require('multer');
 const login = require("./middleware/login");
 const board = require("./middleware/board");
 const goods = require("./middleware/goods");
+const notice = require("./middleware/notice");
+
 const router = express.Router();
+const { verifyToken } = require("./middleware/auth");
 
 //UPLOAD
 const upload = multer({
@@ -24,23 +27,24 @@ const upload = multer({
 router.get("/", (req, res) =>
   res.render("index", { title: "평화나라 - 중고 거래 사이트", token: req.cookies.token })
 );
-// 로그인
-router.get("/login", (req, res) =>
-  res.render("login", { title: "로그인 - 평화나라", page: "login", token: req.cookies.token })
-);
-router.post("/login", login.loginMiddleware, (req, res) =>
-  res.render("login", { page: "login", token: req.cookies.token })
-);
-// 회원가입
-router.get("/signup", (req, res) =>
-  res.render("signup", { title: "회원가입 - 평화나라", page: "signup", token: req.cookies.token })
-);
-router.post("/signup", login.signupMiddleware, (req, res) =>
-  res.render("signup", { page: "signup", token: req.cookies.token })
-);
 
-/* 공지사항 */
-router.get("/notice", board.noticeListMiddleware
+router.get("/", (req, res) => res.render("index", { title: "평화나라 - 중고 거래 사이트", token: req.cookies.token }));
+
+// 로그인
+//
+router.get("/login", (req, res) => res.render("login", { title: "로그인 - 평화나라", page: "login", token: req.cookies.token }));
+router.post("/login", login.loginMiddleware, (req, res) => res.redirect(301, "/"));
+//
+// 회원가입
+//
+router.get("/signup", (req, res) => res.render("signup", { title: "회원가입 - 평화나라", page: "signup", token: req.cookies.token }));
+router.post("/signup", login.signupMiddleware, (req, res) => res.redirect(301, "/"));
+//
+// 공지사항
+//
+router.get(
+    "/notice",
+    notice.listMiddleware
     // res.redirect(301,'/notice/1');
 );
 router.get("/notice/:no", board.noticeDetailMiddleware);
@@ -83,5 +87,4 @@ router.get("/detail", (req, res) => res.render("detail", { page: "detail", token
 router.get("/logout", login.logout, (req, res) =>
   res.render("logout", { title: "로그아웃 - 평화나라", page: "logout" })
 );
-
 module.exports = router;
