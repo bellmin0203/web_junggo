@@ -8,7 +8,9 @@
     <header>
       <%- include('./layout/header') %>
     </header>
-    
+
+    <div class="container">
+      
     <ul style="max-width: 850px; margin: auto;">
       <% for(i in goods) { %>
           <li onclick="location.href='/goodsDetail/<%= goods[i].no %>'" class="goodsListItem" >
@@ -17,8 +19,6 @@
           </li>
       <% } %>
     </ul>
-
-
       goods List
       <button onclick="location.href='/goodsWrtie'">글작성</button>
     </div>

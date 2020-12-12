@@ -33,7 +33,7 @@
             <%}%>
           </tbody>
         </table>
-        <% if(userGrade == 2) { %>
+        <% if(user && user['grade'] == 2) { %>
         <div class="d-flex justify-content-end">
           <a href="/noticeWrite" class="btn btn-secondary mb-3">글쓰기</a>
         </div>

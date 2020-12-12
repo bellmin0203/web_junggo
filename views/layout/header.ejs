@@ -23,17 +23,32 @@
         <li class="nav-item"><a class="nav-link" href="/goods">매물목록</a></li>
         <li class="nav-item"><a class="nav-link" href="/my">내 매물</a></li>
       </ul>
-      <% if(token) { %>
-        <button type="button" onclick="location.href='/logout'" class="btn btn-primary">로그아웃</button>
-      <% } else { %>
-        <ul class="d-flex navbar-nav">
-          <li class="nav-item order-1 p-1">
-            <a class="btn btn-primary" href="/login">로그인</a>
-          </li>
-          <li class="nav-item order-2 p-1">
-            <a class="btn btn-primary" href="/signup">회원가입</a>
-          </li>
+      <% console.log("44"+user) %>
+      <% if(user) { %>
+        <ul class="nav-item dropdown">
+          <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action" aria-expanded="false">
+            <%= user['nickname'] %> 
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item">
+              <i class="fa fa-user-o"></i> 
+              프로필
+            </a>
+            <a href="/logout" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i>
+              로그아웃
+            </a> 
+          </div>
         </ul>
+      <% } else { %>
+      <ul class="d-flex navbar-nav">
+        <li class="nav-item order-1 p-1">
+          <a class="btn btn-primary" href="/login">로그인</a>
+        </li>
+        <li class="nav-item order-2 p-1">
+          <a class="btn btn-primary" href="/signup">회원가입</a>
+        </li>
+      </ul>
       <% } %>
     </div>
 </div>
