@@ -38,6 +38,7 @@ module.exports.noticeListMiddleware = (req, res, next) => {
     page: "noticeList",
     rows: rows,
     writerRows: writerRows,
+    token: req.cookies.token,
   });
   next();
 };

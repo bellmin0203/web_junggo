@@ -8,8 +8,19 @@
     <header>
       <%- include('./layout/header') %>
     </header>
-    <div>
+    
+    <ul style="max-width: 850px; margin: auto;">
+      <% for(i in goods) { %>
+          <li onclick="location.href='/goodsDetail/<%= goods[i].no %>'" class="goodsListItem" >
+            <img src="/images/<%= goods[i].photo %>" alt="" width="150px" height="150px">
+            <p><%= goods[i].title %></p>
+          </li>
+      <% } %>
+    </ul>
+
+
       goods List
+      <button onclick="location.href='/goodsWrtie'">글작성</button>
     </div>
     <footer>
       <%- include('./layout/footer') %>

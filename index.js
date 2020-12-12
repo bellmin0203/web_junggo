@@ -33,5 +33,6 @@ app.use('/', (req,res,next)=>{
     next();
 });
 app.use('/', router);
+app.use('/images', express.static('images'));
 
 app.listen(PORT, () => console.log("app listening at http://localhost:",PORT));

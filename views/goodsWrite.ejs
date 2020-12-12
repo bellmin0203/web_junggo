@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <%- include('./layout/head') %>
+</head>
+<body>
+  <div class="wrap">
+    <header><%- include('./layout/header') %></header>
+    <div class="container">
+      <form
+        action="/goodsWrite"
+        method="post"
+        encType="multipart/form-data"
+        onsubmit="return onWriteSubmit();"
+      >
+        <div class="form-group">
+          <label class="font-weight-bold" for="title">제목</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="제목을 입력하세요."
+            name="title"
+            id="title"
+          />
+        </div>
+        
+        <div class="form-group" style="width: 20%; display: inline-block; ">
+          <label class="font-weight-bold" for="title" >가격</label>
+          <input type="text" class="form-control" placeholder="가격을 입력하세요" name="price">
+        </div>
+
+        <div class="form-group" style="width: 15%; display: inline-block; ">
+          <label class="font-weight-bold" for="title" >카테고리</label>
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="category">
+            <% for (var i in category){ %>
+              <option value="<%= category[i].id %>">
+                <%= category[i].strName %>
+              </option>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="form-group" style="width: 15%; display: inline-block; ">
+          <label class="font-weight-bold" for="title" >지역</label>
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="city">
+            <% for (var i in city){ %>
+              <option value="<%= city[i].id %>">
+                <%= city[i].strName %>
+              </option>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="form-group" style="width: 30%; display: inline-block; ">
+          <label class="font-weight-bold" for="title" >대표 이미지</label>
+          <input type="file"" class="form-control" name="photo">
+        </div>
+
+        <div class="form-group">
+          <label class="font-weight-bold" for="content">내용</label>
+          <textarea
+            class="form-control"
+            name="content"
+            id="summernote"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <div class="form-group d-flex justify-content-end">
+          <input type="submit" class="btn btn-primary" value="등록" />
+        </div>
+      </form>
+    </div>
+    <footer><%- include('./layout/footer') %></footer>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      console.log($.summernote.options);
+      // 실행시 언어 설정을 한글로 설정
+      $.summernote.options.lang = "ko-KR";
+      $.summernote.options.airMode = false;
+
+      $("#summernote").summernote({
+        placeholder: "상품 설명을 입력하세요",
+        tabsize: 2,
+        height: 500,
+        focus: true,
+        lang: "ko-KR",
+        toolbar: [
+            [ 'style', [ 'style' ] ],
+            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+            [ 'fontname', [ 'fontname' ] ],
+            [ 'fontsize', [ 'fontsize' ] ],
+            [ 'color', [ 'color' ] ],
+            [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+            [ 'table', [ 'table' ] ],
+            [ 'insert', [ 'link'] ],
+            [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+        ]
+      });
+    });
+
+    function sendFile(file, el) {
+      var form_data = new FormData();
+      form_data.append("file", file);
+      $.ajax({
+        data: form_data,
+        type: "POST",
+        url: "./img",
+        cache: false,
+        contentType: false,
+        enctype: "multipart/form-data",
+        processData: false,
+        success: function (img_name) {
+          $(el).summernote("editor.insertImage", img_name);
+        },
+      });
+    }
+    function onWriteSubmit() {
+      if ($("#title").val().trim() == "") {
+        var message = "제목을 입력해 주세요";
+        $("#title").val("");
+        $("#title").focus();
+        alert(message);
+        return false;
+      }
+
+      if ($("#summernote").val().trim() == "") {
+        var message = "본문 내용을 입력해 주세요";
+        $("#summernote").val("");
+        $("#summernote").focus();
+        alert(message);
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
