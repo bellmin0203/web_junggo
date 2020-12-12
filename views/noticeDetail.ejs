@@ -24,7 +24,7 @@
             </tbody>
           </table>
         </div>
-        <% if(writer){ %>
+        <% if(token && (user['grade'] == 2 || writer)){ %>
         <form action="/notice/<%= rows[0].no %>?_method=DELETE" method="POST">
           <div class="form-group d-flex justify-content-end">
             <input type="submit" class="btn btn-danger" value="삭제" />

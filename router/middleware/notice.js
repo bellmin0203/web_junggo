@@ -3,7 +3,7 @@ const jwt = require("../../lib/jwt");
 
 module.exports.writeMiddleware = function (req, res, next) {
     try {
-        const writer = decoded[res.locals.userNo];
+        const writer = res.locals.user.no;
         const title = req.body.title;
         const content = req.body.content;
         var sql = "INSERT INTO NOTICE (writer, title, content) VALUES(?, ?, ?);";
@@ -16,13 +16,6 @@ module.exports.writeMiddleware = function (req, res, next) {
 
 module.exports.listMiddleware = (req, res, next) => {
     try {
-        const accessToken = req.cookies.token;
-        const decoded = jwt.checkToken(accessToken, "access_token");
-        var userGrade = 1;
-
-        if(decoded)
-            userGrade = decoded['grade'];
-
         var sql = "SELECT no, writer, title, date_format(dtCreate, '%Y.%m.%d %H:%i') `dtCreate` FROM NOTICE ORDER BY dtCreate DESC;";
 
         const rows = db.query(sql);
@@ -40,7 +33,8 @@ module.exports.listMiddleware = (req, res, next) => {
             page: "noticeList",
             rows: rows,
             writerRows: writerRows,
-            userGrade: userGrade
+            user: res.locals.user,
+            token: req.cookies.token,
         });
         next();
     } catch (err) {
@@ -50,28 +44,28 @@ module.exports.listMiddleware = (req, res, next) => {
 
 module.exports.detailMiddleware = (req, res, next) => {
     try {
-        const access_token = req.cookies.token;
-        const decoded = jwt.checkToken(access_token, "access_token");
+        const sql = "SELECT * FROM NOTICE WHERE no = ?";
+        const rows = db.query(sql, [req.params.no]);
+        console.log("NOTICE Read No => " + rows[0].no);
 
-        if (decoded) {
-            const sql = "SELECT * FROM NOTICE WHERE no = ?";
-            const rows = db.query(sql, [req.params.no]);
-            console.log("NOTICE Read No => " + rows[0].no);
-            if (rows[0].writer == decoded["no"] && rows.length == 1) {
+        if (req.cookies.token) {
+            if (rows[0].writer == res.locals.user.no && rows.length == 1) {
                 res.render("noticeDetail", {
                     title: rows[0].title + " - 공지사항 - 평화나라",
                     page: "noticeDetail",
                     rows: rows,
                     writer: true,
                     token: req.cookies.token,
+                    user: res.locals.user,
                 });
-            } else if (rows.length == 1) {
+            } else {
                 res.render("noticeDetail", {
                     title: rows[0].title + " - 공지사항 - 평화나라",
                     page: "noticeDetail",
                     rows: rows,
                     writer: false,
                     token: req.cookies.token,
+                    user: res.locals.user,
                 });
             }
         } else {
@@ -81,6 +75,7 @@ module.exports.detailMiddleware = (req, res, next) => {
                 rows: rows,
                 writer: false,
                 token: req.cookies.token,
+                user: res.locals.user,
             });
         }
     } catch (err) {
@@ -93,7 +88,7 @@ module.exports.deleteMiddleware = (req, res, next) => {
         var sql = "SELECT writer FROM NOTICE WHERE no = ?";
         const writer = db.query(sql, [req.params.no]);
 
-        if (writer == decoded[res.locals.userNo]) {
+        if (writer == res.locals.user.no || res.locals.user.grade == 2) {
             sql = "DELETE FROM NOTICE WHERE no = ?";
             db.query(sql, [req.params.no]);
             next();

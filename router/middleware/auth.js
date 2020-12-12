@@ -1,12 +1,12 @@
 const jwt = require("../../lib/jwt");
 
-const verifyToken = (req, res, next) => {
+module.exports.verifyToken = (req, res, next) => {
     try {
         const accessToken = req.cookies.token;
         const decoded = jwt.checkToken(accessToken, "access_token");
 
         if(decoded){
-            res.locals.userNo = decoded['no'];
+            res.locals.user = decoded;
             next();
         } else {
             res.status(401).send({ error: 'unauthorized' });
@@ -16,4 +16,15 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-exports.verifyToken = verifyToken;
+module.exports.loginCheck = (req, res, next) => {
+    if(req.cookies.token){
+        const accessToken = req.cookies.token;
+        const decoded = jwt.checkToken(accessToken, "access_token");
+        if(decoded){
+            res.locals.user = decoded;
+            next();
+        }
+    } else {
+        next();
+    }
+}
