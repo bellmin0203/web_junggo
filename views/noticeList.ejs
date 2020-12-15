@@ -1,62 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <%- include('./layout/head') %>
-  </head>
-  <body>
-    <div class="wrap">
-      <header><%- include('./layout/header') %></header>
-      <div class="container" style="height: 550px;">
-        <table class="table table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col" class="text-center">번호</th>
-              <th scope="col" class="text-center">제목</th>
-              <th scope="col" class="text-center">작성자</th>
-              <th scope="col" class="text-center">날짜</th>
-              <th scope="col" class="text-center">조회수</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for(var i = 0; i < rows.length; i++){ var data = rows[i]; %>
-            <tr class="text-center">
-              <td scope="rows"><%= data.no %></td>
-              <td style="width: 60%">
-                <a style="color: #333" href="/notice/<%= data.no %>"
-                  ><%= data.title %></a
-                >
-              </td>
-              <td><%= writerRows[i] %></td>
-              <td><%= data.dtCreate %></td>
-              <td><%= data.no %></td>
-            </tr>
-            <%}%>
-          </tbody>
-        </table>
-        <% if(user && user['grade'] == 2) { %>
-        <div class="d-flex justify-content-end">
-          <a href="/noticeWrite" class="btn btn-secondary mb-3">글쓰기</a>
+    <head>
+        <%- include('./layout/head') %>
+    </head>
+    <body>
+        <div class="wrap">
+            <header><%- include('./layout/header') %></header>
+            <div class="container" style="height: 550px">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="text-center">번호</th>
+                            <th scope="col" class="text-center">제목</th>
+                            <th scope="col" class="text-center">작성자</th>
+                            <th scope="col" class="text-center">날짜</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i = length-((curPage*page_size)-page_size); i > length-(curPage*page_size); i--){ if(i < 0){ break; } else { var data = rows[i]; %>
+                        <tr class="text-center">
+                            <td scope="rows"><%= data.no %></td>
+                            <td style="width: 60%">
+                                <a style="color: #333" href="/notice/<%= curPage%>/detail?no=<%=data.no%>"><%= data.title %></a>
+                            </td>
+                            <td><%= writerRows[i] %></td>
+                            <td><%= data.dtCreate %></td>
+                        </tr>
+                        <% } } %>
+                    </tbody>
+                </table>
+                <% if(user && user['grade'] == 2) { %>
+                <div class="d-flex justify-content-end">
+                    <a href="/noticeWrite" class="btn btn-secondary mb-3">글쓰기</a>
+                </div>
+                <% } %>
+
+                <ul class="pagination pagination-sm justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="/notice/<%=curPage-1%>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    <% for(var j = parseInt(curPage/10); j < rows.length/page_size; j++){ if(j+1 == curPage){ %>
+                    <li class="page-item active"><% } else { %>
+
+                    <li class="page-item">
+                        <% } %>
+                        <a class="page-link" href="/notice/<%j+1%>"><%= j+1 %></a>
+                    </li>
+                    <% } %>
+                    <li class="page-item">
+                        <a class="page-link" href="/notice/<%=curPage+1%>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <footer><%- include('./layout/footer') %></footer>
         </div>
-        <% } %>
-
-        <ul class="pagination pagination-sm justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous"
-              ><span aria-hidden="true">&laquo;</span></a
-            >
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next"
-              ><span aria-hidden="true">&raquo;</span></a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <footer><%- include('./layout/footer') %></footer>
-    </div>
-  </body>
+    </body>
 </html>

@@ -16,11 +16,18 @@ module.exports.writeMiddleware = function (req, res, next) {
 
 module.exports.listMiddleware = (req, res, next) => {
     try {
-        var sql = "SELECT no, writer, title, date_format(dtCreate, '%Y.%m.%d %H:%i') `dtCreate` FROM NOTICE ORDER BY dtCreate DESC;";
+        var curPage = req.params.page;
+        const page_size = 10;
+        if(curPage <= 0)  curPage = 1;  // 요청 페이지가 1보다 작은 경우 첫 페이지로 설정
+        
+        var sql = "SELECT no, writer, title, date_format(dtCreate, '%Y.%m.%d %H:%i') `dtCreate` FROM NOTICE ORDER BY dtCreate ASC;";
 
         const rows = db.query(sql);
-        var tempRows;
         const writerRows = [];
+        var tempRows;
+
+        const totalPage = rows.length/page_size;
+        if(totalPage < curPage)  curPage = 1;   // 요청페이지가 범위를 초과하는 경우 첫페이지로 설정
 
         rows.forEach(function (item) {
             sql = "SELECT nickname FROM USER WHERE no = ?;";
@@ -30,10 +37,12 @@ module.exports.listMiddleware = (req, res, next) => {
 
         res.render("noticeList", {
             title: "공지사항 - 평화나라",
-            page: "noticeList",
+            curPage: curPage,
+            page_size: page_size,
             rows: rows,
+            length: rows.length - 1,
             writerRows: writerRows,
-            user: res.locals.user,
+            user: res.locals.user
         });
         next();
     } catch (err) {
@@ -44,7 +53,7 @@ module.exports.listMiddleware = (req, res, next) => {
 module.exports.detailMiddleware = (req, res, next) => {
     try {
         const sql = "SELECT * FROM NOTICE WHERE no = ?";
-        const rows = db.query(sql, [req.params.no]);
+        const rows = db.query(sql, [req.query.no]);
         console.log("NOTICE Read No => " + rows[0].no);
 
         if (req.cookies.token) {
