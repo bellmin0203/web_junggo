@@ -59,6 +59,17 @@ router.get("/goods", auth.loginCheck, goods.goodsListMiddleware, (req, res) =>
         title: "매물목록 - 평화나라",
         page: "goodsList",
         user: res.locals.user,
+        pageInfo : res.locals.pageInfo,
+        goods: res.locals.goods,
+    })
+);
+
+router.get("/goods/:page", auth.loginCheck, goods.goodsListMiddleware, (req, res) =>
+    res.render("goodsList", {
+        title: "매물목록 - 평화나라",
+        page: "goodsList",
+        user: res.locals.user,
+        pageInfo : res.locals.pageInfo,
         goods: res.locals.goods,
     })
 );

@@ -19,8 +19,34 @@
           </li>
       <% } %>
     </ul>
-      goods List
-      <button onclick="location.href='/goodsWrtie'">글작성</button>
+    
+      <button onclick="location.href='/goodsWrtie'" class="btn btn-primary" style="margin: 10px auto; display: block;">매물등록</button>
+    
+      <ul class="pagination pagination-sm justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="/goods/1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        </li>
+        
+        <% for(i in pageInfo.prevPages){ %>
+          <li class="page-item">
+            <a class="page-link" href="/goods/<%=pageInfo.prevPages[i]%>"><%=pageInfo.prevPages[i]%></a>
+          </li>
+        <% } %>
+
+        <li class="page-item active">
+          <a class="page-link" href="/goods/<%=pageInfo.nowPage%>"><%=pageInfo.nowPage%></a>
+        </li>
+
+        <% for(i in pageInfo.nextPages){ %>
+          <li class="page-item">
+            <a class="page-link" href="/goods/<%=pageInfo.nextPages[i]%>"><%=pageInfo.nextPages[i]%></a>
+          </li>
+        <% } %>
+
+        <li class="page-item">
+            <a class="page-link" href="/goods/<%=pageInfo.maxPage%>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+        </li>
+    </ul>
     </div>
     <footer>
       <%- include('./layout/footer') %>

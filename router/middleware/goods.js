@@ -22,15 +22,42 @@ module.exports.goodsWriteInsertMiddleware = function(req, res, next){
     return res.redirect(301,'/')
 }
 
-
+const ONE_PAGE_CONTENT_COUNT = 10;
 module.exports.goodsListMiddleware = function(req, res, next){
+    const page = req.params.page===undefined?1:parseInt(req.params.page);
+
     const goods = db.query("\
     SELECT b.`no`, u.nickname `writer`, title, content, price, bs.strName `status`, c.strName `category`, ct.strName `city`, photo FROM BOARD b\
 	LEFT JOIN `USER`u ON u.`no` = b.writer\
 	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
 	LEFT JOIN CITY_TYPE ct ON b.city = ct.id\
-	LEFT JOIN CATEGORY c ON b.category = c.id;\
-    ");
+    LEFT JOIN CATEGORY c ON b.category = c.id\
+    LIMIT ?, ?;\
+    ",[(page-1)*ONE_PAGE_CONTENT_COUNT,ONE_PAGE_CONTENT_COUNT]);
+    const rows = db.query("SELECT count(*) 'count' FROM BOARD")
+    const maxPage = Math.ceil((rows[0].count)/ONE_PAGE_CONTENT_COUNT)
+    const nextPages = [];
+    const prevPages = [];
+    const prevLimit = (maxPage - page)>3?3:(maxPage - page);
+    for(var i=page-1;i>0;i--){
+        prevPages.push(i);
+        if(prevPages.length>=(6-prevLimit)) break;
+    }
+    
+    for(var i=page+1;i<=maxPage;i++){
+        nextPages.push(i);
+        if(nextPages.length>=6-prevPages.length) break;
+    }
+
+    const pageInfo = {
+        maxPage : maxPage,
+        nowPage : page,
+        nextPages : nextPages,
+        prevPages : prevPages.reverse(),
+        onePageContent : ONE_PAGE_CONTENT_COUNT,
+    }
+    console.log(pageInfo);
     res.locals.goods = goods;
+    res.locals.pageInfo = pageInfo;
     next();
 }
