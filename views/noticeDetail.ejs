@@ -25,14 +25,25 @@
           </table>
         </div>
         <% if(user && (user['grade'] == 2 || writer)){ %>
-        <form action="/notice/<%= rows[0].no %>?_method=DELETE" method="POST">
-          <div class="form-group d-flex justify-content-end">
-            <input type="submit" class="btn btn-danger" value="삭제" />
-          </div>
-        </form>
+          <form id="form" class="form-inline justify-content-end" method="POST" style="margin-left: -15px; margin-right: -15px;">
+            <div class="form-group mx-1">
+              <input type="submit" class="btn btn-secondary" value="수정" formaction="/notice/<%= rows[0].no %>"/>
+            </div>
+            <div class="form-group mx-1">
+              <input type="submit" class="btn btn-secondary" value="삭제" onclick="del()" formaction="/notice/<%= rows[0].no %>?_method=DELETE"/>
+            </div>
+          </form>
         <% } %>
       </div>
       <footer><%- include('./layout/footer') %></footer>
     </div>
+    <script>
+      function del(){
+        var chk = confirm("정말 삭제하시겠습니까?");
+        if(chk){
+          $("#form").submit();
+        }
+      }
+    </script>
   </body>
 </html>

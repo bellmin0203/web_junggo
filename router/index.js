@@ -46,10 +46,13 @@ router.get("/noticeWrite", auth.verifyToken, (req, res) =>
         title: "공지사항 글쓰기 - 평화나라",
         page: "noticeWrite",
         user: res.locals.user,
+        modify: 0,
     })
 );
 router.post("/noticeWrite", auth.verifyToken, notice.writeMiddleware, (req, res) => res.redirect(301, "/notice"));
 router.delete("/notice/:no", auth.verifyToken, notice.deleteMiddleware, (req, res) => res.redirect(301, "/notice"));
+router.post("/notice/:no", auth.verifyToken, notice.modifyMiddleware);
+router.put("/notice/update/:no", auth.verifyToken, notice.updateMiddleware, (req, res) => res.redirect(301, "/notice"));
 
 //
 // 매물목록
