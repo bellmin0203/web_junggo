@@ -4,7 +4,7 @@ module.exports.verifyToken = (req, res, next) => {
     try {
         const accessToken = req.cookies.token;
         const decoded = jwt.checkToken(accessToken, "access_token");
-
+        
         if(decoded){
             res.locals.user = decoded;
             next();

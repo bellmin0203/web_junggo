@@ -6,8 +6,9 @@
     <body>
         <div class="wrap">
             <header><%- include('./layout/header') %></header>
+            <% var modify = modify; var board_title = board_title; var content = content;%>
             <div class="container">
-                <form action="/noticeWrite" method="post" onsubmit="return onWriteSubmit();">
+                <form action="/notice/update/<%= rows[0].no %>?_method=PUT" method="post" onsubmit="return onWriteSubmit();">
                     <div class="form-group">
                         <label class="font-weight-bold" for="title">제목</label>
                         <input type="text" class="form-control" placeholder="제목을 입력하세요." name="title" id="title" />
@@ -28,6 +29,8 @@
                 // 실행시 언어 설정을 한글로 설정
                 $.summernote.options.lang = "ko-KR";
                 $.summernote.options.airMode = false;
+
+                $("#summernote").val(content);
                 $("#summernote").summernote({
                     placeholder: "중거 거래 사이트 - 평화나라",
                     tabsize: 2,
@@ -67,6 +70,14 @@
                     fontNames: ["Arial", "Arial Black", "Comic Sans MS", "Courier New", "맑은 고딕", "궁서", "굴림체", "굴림", "돋음체", "바탕체"],
                     fontSizes: ["8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "28", "30", "36", "50", "72"],
                 });
+
+                var modify = "<%=modify%>";
+                var title = "<%=board_title%>";
+                var content = "<%=content%>";
+                if(modify == 1){
+                    $("#title").val(title);
+                    $("#summernote").summernote.val(content);
+                }
             });
             /* 이미지 파일 업로드 */
             function sendFile(file, editor) {
