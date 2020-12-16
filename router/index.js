@@ -40,7 +40,7 @@ router.post("/signup", login.signupMiddleware, (req, res) => res.redirect(301, "
 //
 router.get("/notice", (req, res) => res.redirect(301, "/notice/1"));
 router.get("/notice/:page", auth.loginCheck, notice.listMiddleware);
-router.get("/notice/:page/detail", auth.loginCheck, notice.detailMiddleware);
+router.get("/notice/detail/:no", auth.loginCheck, notice.detailMiddleware);
 router.get("/noticeWrite", auth.verifyToken, (req, res) =>
     res.render("noticeWrite", {
         title: "공지사항 글쓰기 - 평화나라",
@@ -52,7 +52,7 @@ router.get("/noticeWrite", auth.verifyToken, (req, res) =>
 router.post("/noticeWrite", auth.verifyToken, notice.writeMiddleware, (req, res) => res.redirect(301, "/notice"));
 router.delete("/notice/:no", auth.verifyToken, notice.deleteMiddleware, (req, res) => res.redirect(301, "/notice"));
 router.post("/notice/:no", auth.verifyToken, notice.modifyMiddleware);
-router.put("/notice/update/:no", auth.verifyToken, notice.updateMiddleware, (req, res) => res.redirect(301, "/notice"));
+router.put("/notice/update/:no", auth.verifyToken, notice.updateMiddleware);
 
 //
 // 매물목록

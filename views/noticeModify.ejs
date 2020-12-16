@@ -6,7 +6,7 @@
     <body>
         <div class="wrap">
             <header><%- include('./layout/header') %></header>
-            <% var modify = modify; var board_title = board_title; var content = content;%>
+            <% var board_title = board_title; var content = content;%>
             <div class="container">
                 <form action="/notice/update/<%= rows[0].no %>?_method=PUT" method="post" onsubmit="return onWriteSubmit();">
                     <div class="form-group">
@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold" for="content">내용</label>
-                        <textarea class="form-control" name="content" id="summernote" cols="30" rows="10"></textarea>
+                        <textarea class="form-control" name="content" id="summernote" cols="30" rows="10"><%= content %></textarea>
                     </div>
                     <div class="form-group d-flex justify-content-end">
                         <input type="submit" class="btn btn-primary" value="등록" />
@@ -30,9 +30,11 @@
                 $.summernote.options.lang = "ko-KR";
                 $.summernote.options.airMode = false;
 
-                $("#summernote").val(content);
+                var title = "<%=board_title%>";
+                
+                $("#title").val(title);
                 $("#summernote").summernote({
-                    placeholder: "중거 거래 사이트 - 평화나라",
+                    placeholder: "중고 거래 사이트 - 평화나라",
                     tabsize: 2,
                     height: 500,
                     minHeight: null,
@@ -70,14 +72,6 @@
                     fontNames: ["Arial", "Arial Black", "Comic Sans MS", "Courier New", "맑은 고딕", "궁서", "굴림체", "굴림", "돋음체", "바탕체"],
                     fontSizes: ["8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "28", "30", "36", "50", "72"],
                 });
-
-                var modify = "<%=modify%>";
-                var title = "<%=board_title%>";
-                var content = "<%=content%>";
-                if(modify == 1){
-                    $("#title").val(title);
-                    $("#summernote").summernote.val(content);
-                }
             });
             /* 이미지 파일 업로드 */
             function sendFile(file, editor) {

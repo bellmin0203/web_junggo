@@ -17,13 +17,11 @@ module.exports.writeMiddleware = function (req, res, next) {
 
 module.exports.modifyMiddleware = (req, res, next) => {
     const rows = db.query("SELECT * FROM NOTICE WHERE no = ?", [req.params.no]);
-    res.locals.modify = 1;
     res.render("noticeModify", {
         title: "공지사항 글수정 - 평화나라",
         page: "noticeModify",
         user: res.locals.user,
         rows: rows,
-        modify: res.locals.modify,
         board_title: rows[0].title,
         content: rows[0].content,
     });
@@ -37,6 +35,7 @@ module.exports.updateMiddleware = (req, res, next) => {
         const no = req.params.no;
         const rows = db.query("UPDATE NOTICE SET title = ?, content = ? WHERE no = ?", [title, content, no]);
         console.log("공지사항 수정 완료");
+        res.redirect(301, "/notice/detail/"+no);
         next();
     } catch (err) {
         next(err);
@@ -82,7 +81,7 @@ module.exports.listMiddleware = (req, res, next) => {
 module.exports.detailMiddleware = (req, res, next) => {
     try {
         const sql = "SELECT * FROM NOTICE WHERE no = ?";
-        const rows = db.query(sql, [req.query.no]);
+        const rows = db.query(sql, [req.params.no]);
         console.log("NOTICE Read No => " + rows[0].no);
 
         if (req.cookies.token) {
