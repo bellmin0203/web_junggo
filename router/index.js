@@ -2,7 +2,6 @@ const express = require("express");
 const multer = require("multer");
 const auth = require("./middleware/auth");
 const login = require("./middleware/login");
-const board = require("./middleware/board");
 const goods = require("./middleware/goods");
 const notice = require("./middleware/notice");
 
@@ -41,6 +40,7 @@ router.post("/signup", login.signupMiddleware, (req, res) => res.redirect(301, "
 router.get("/notice", (req, res) => res.redirect(301, "/notice/1"));
 router.get("/notice/:page", auth.loginCheck, notice.listMiddleware);
 router.get("/notice/detail/:no", auth.loginCheck, notice.detailMiddleware);
+/* 공지사항 글쓰기 */
 router.get("/noticeWrite", auth.verifyToken, (req, res) =>
     res.render("noticeWrite", {
         title: "공지사항 글쓰기 - 평화나라",
@@ -50,7 +50,10 @@ router.get("/noticeWrite", auth.verifyToken, (req, res) =>
     })
 );
 router.post("/noticeWrite", auth.verifyToken, notice.writeMiddleware, (req, res) => res.redirect(301, "/notice"));
+router.post("/uploadImage/notice", upload.single('file'), (req, res) => res.send("/images/"+req.file.filename));
+/* 공지사항 삭제 */
 router.delete("/notice/:no", auth.verifyToken, notice.deleteMiddleware, (req, res) => res.redirect(301, "/notice"));
+/* 공지사항 수정 */
 router.post("/notice/:no", auth.verifyToken, notice.modifyMiddleware);
 router.put("/notice/update/:no", auth.verifyToken, notice.updateMiddleware);
 

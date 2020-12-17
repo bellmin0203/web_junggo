@@ -42,20 +42,37 @@ module.exports.updateMiddleware = (req, res, next) => {
     }
 };
 
+const ONE_PAGE_CONTENT_COUNT = 10;
 module.exports.listMiddleware = (req, res, next) => {
     try {
-        var curPage = req.params.page;
-        const page_size = 10;
-        if (curPage <= 0) curPage = 1; // 요청 페이지가 1보다 작은 경우 첫 페이지로 설정
-
+        var curPage = req.params.page === undefined? 1 : parseInt(req.params.page);
         var sql = "SELECT no, writer, title, date_format(dtCreate, '%Y.%m.%d %H:%i') `dtCreate` FROM NOTICE ORDER BY dtCreate ASC;";
 
         const rows = db.query(sql);
         const writerRows = [];
         var tempRows;
 
-        const totalPage = Math.ceil(rows.length / page_size);
-        if (totalPage < curPage) curPage = 1; // 요청페이지가 범위를 초과하는 경우 첫페이지로 설정
+        const maxPage = Math.ceil(rows.length / ONE_PAGE_CONTENT_COUNT);
+        const nextPages = [];
+        const prevPages = [];
+        const prevLimit = (maxPage - curPage) > 3 ? 3:(maxPage - curPage);
+        for(var i = curPage-1; i>0; i--){
+            prevPages.push(i);
+            if(prevPages.length >= (6 - prevLimit)) break;
+        }
+
+        for(var i = curPage + 1; i<=maxPage; i++){
+            nextPages.push(i);
+            if(nextPages.length >= 6-prevPages.length) break;
+        }
+
+        const pageInfo = {
+            maxPage: maxPage,
+            nowPage: curPage,
+            nextPages: nextPages,
+            prevPages: prevPages.reverse(),
+            onePageContent: ONE_PAGE_CONTENT_COUNT
+        }
 
         rows.forEach(function (item) {
             sql = "SELECT nickname FROM USER WHERE no = ?;";
@@ -65,8 +82,7 @@ module.exports.listMiddleware = (req, res, next) => {
 
         res.render("noticeList", {
             title: "공지사항 - 평화나라",
-            curPage: curPage,
-            page_size: page_size,
+            pageInfo: pageInfo,
             rows: rows,
             length: rows.length - 1,
             writerRows: writerRows,

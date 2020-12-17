@@ -17,7 +17,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(var i = length-((curPage*page_size)-page_size); i > length-(curPage*page_size); i--){ if(i < 0){ break; } else { var data = rows[i]; %>
+                        <% for(var i = length-((pageInfo.nowPage*pageInfo.onePageContent)-pageInfo.onePageContent); i > length-(pageInfo.nowPage*pageInfo.onePageContent); i--){ if(i < 0){ break; } else { var data = rows[i]; %>
                         <tr class="text-center">
                             <td scope="rows"><%= data.no %></td>
                             <td style="width: 60%">
@@ -37,20 +37,28 @@
 
                 <ul class="pagination pagination-sm justify-content-center">
                     <li class="page-item">
-                        <a class="page-link" href="/notice/<%=parseInt(curPage)-1%>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                        <a class="page-link" href="/notice/1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </li>
-                    <% for(var j = 0; j < rows.length/page_size; j++){ 
-                        var k = j+1;
-                        if(k == curPage){ %>
-                    <li class="page-item active"><% } else { %>
+                    <% for(i in pageInfo.prevPages){ %>
                     <li class="page-item">
-                        <% } %>
-                        <a class="page-link" href="/notice/<%=k%>"><%=k%>
+                        <a class="page-link" href="/notice/<%=pageInfo.prevPages[i]%>"><%=pageInfo.prevPages[i]%>
                         </a>
                     </li>
                     <% } %>
+
+                    <li class="page-item active">
+                        <a href="/notice/<%=pageInfo.nowPage%>" class="page-link">
+                        <%=pageInfo.nowPage%></a>
+                    </li>
+
+                    <% for(i in pageInfo.nextPages){ %>
                     <li class="page-item">
-                        <a class="page-link" href="/notice/<%=parseInt(curPage)+1%>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                        <a class="page-link" href="/notice/<%=pageInfo.nextPages[i]%>"><%=pageInfo.nextPages[i]%></a>
+                    </li>
+                    <% } %>
+
+                    <li class="page-item">
+                        <a class="page-link" href="/notice/<%=pageInfo.maxPage%>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                     </li>
                 </ul>
             </div>
