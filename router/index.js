@@ -22,12 +22,16 @@ const upload = multer({
     }),
 });
 
-router.get("/", auth.loginCheck, (req, res) => res.render("index", { title: "평화나라 - 중고 거래 사이트", user: res.locals.user }));
-
+router.get("/", auth.loginCheck, goods.recentlyGoods, (req, res) => res.render("index", { title: "평화나라 - 중고 거래 사이트", user: res.locals.user, recGoods: res.locals.goods }));
+//
 // 로그인
 //
 router.get("/login", (req, res) => res.render("login", { title: "로그인 - 평화나라", page: "login", user: res.locals.user }));
 router.post("/login", login.loginMiddleware, (req, res) => res.redirect(301, "/"));
+
+/* 로그아웃 */
+router.get("/logout", login.logout, (req, res) => res.status(200).redirect("/login"));
+
 //
 // 회원가입
 //
@@ -40,19 +44,21 @@ router.post("/signup", login.signupMiddleware, (req, res) => res.redirect(301, "
 router.get("/notice", (req, res) => res.redirect(301, "/notice/1"));
 router.get("/notice/:page", auth.loginCheck, notice.listMiddleware);
 router.get("/notice/detail/:no", auth.loginCheck, notice.detailMiddleware);
+
 /* 공지사항 글쓰기 */
 router.get("/noticeWrite", auth.verifyToken, (req, res) =>
     res.render("noticeWrite", {
         title: "공지사항 글쓰기 - 평화나라",
         page: "noticeWrite",
-        user: res.locals.user,
-        modify: 0,
+        user: res.locals.user
     })
 );
 router.post("/noticeWrite", auth.verifyToken, notice.writeMiddleware, (req, res) => res.redirect(301, "/notice"));
 router.post("/uploadImage/notice", upload.single('file'), (req, res) => res.send("/images/"+req.file.filename));
+
 /* 공지사항 삭제 */
 router.delete("/notice/:no", auth.verifyToken, notice.deleteMiddleware, (req, res) => res.redirect(301, "/notice"));
+
 /* 공지사항 수정 */
 router.post("/notice/:no", auth.verifyToken, notice.modifyMiddleware);
 router.put("/notice/update/:no", auth.verifyToken, notice.updateMiddleware);
@@ -106,6 +112,13 @@ router.get("/my", auth.verifyToken, (req, res) =>
 );
 router.get("/detail", (req, res) => res.render("detail", { page: "detail" }));
 
-router.get("/logout", login.logout, (req, res) => res.status(200).redirect("/login"));
+//
+// 프로필
+//
+router.get("/profile", auth.verifyToken, (req, res) => res.render("profile", {
+    title: "회원정보 - 평화나라",
+    page: "profile",
+    user: res.locals.user
+}))
 
 module.exports = router;

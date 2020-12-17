@@ -61,3 +61,10 @@ module.exports.goodsListMiddleware = function(req, res, next){
     res.locals.pageInfo = pageInfo;
     next();
 }
+/* GET '/' => 최근 중고 매물 */
+module.exports.recentlyGoods = (req, res, next) => {
+    const recGoods = db.query("SELECT no, title, price, photo FROM BOARD ORDER BY dtCreate DESC LIMIT 8");
+    console.log(recGoods.length);
+    res.locals.goods = recGoods;
+    next();
+}
