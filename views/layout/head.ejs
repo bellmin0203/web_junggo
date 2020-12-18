@@ -35,25 +35,3 @@
 <script src="/js/summernote-lite.js"></script>
 <script src="/js/summernote-ko-KR.js"></script>
 
-<script type="text/javascript">
-  var word_array = [
-    { text: "Lorem", weight: 20, link: "#" },
-    { text: "Ipsum", weight: 14, link: "http://jquery.com/" },
-    {
-      text: "Dolor",
-      weight: 11,
-      link: "#",
-    },
-    { text: "Sit", weight: 12, link: "#" },
-    { text: "Amet", weight: 10, link: "#" },
-    // ...as many words as you want
-  ];
-
-  $(function () {
-    // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
-    $("#word-cloud").jQCloud(word_array, {
-      shape: "rectangular",
-      autoResize: true,
-    });
-  });
-</script>
