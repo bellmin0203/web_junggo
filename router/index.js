@@ -93,6 +93,7 @@ router.get("/goodsDetail/:no", auth.loginCheck, goods.goodsDetailMiddleware, (re
         page: "goodsDetail",
         user: res.locals.user,
         goods: res.locals.goods,
+        comments: res.locals.comments,
     })
 );
 
@@ -108,8 +109,10 @@ router.get("/goodsWrtie", auth.verifyToken, goods.goodsWriteMiddleware, (req, re
     })
 );
 router.post("/goodsWrite", upload.single("photo"), goods.goodsWriteInsertMiddleware);
-
 router.get("/goods/:no", auth.loginCheck, (req, res) => res.render("goodsDetail", { page: "goodsDetail", user: res.locals.user }));
+
+router.post("/goodsDetail/:no/comments",auth.verifyToken, goods.postComment);
+router.delete("/goodsDetail/:bno/comments/:cno",auth.verifyToken, goods.deleteComment);
 //
 // 내 매물
 //

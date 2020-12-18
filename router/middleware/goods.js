@@ -78,7 +78,32 @@ module.exports.goodsDetailMiddleware = (req,res,next) => {
     LEFT JOIN CATEGORY c ON b.category = c.id\
     WHERE b.`no`=?;\
     ",[no]);
-    console.log(goods[0]);
+
+    const comment = db.query(`SELECT c.no, c.dtUpdate, c.content, c.writer, u.nickname 'writerNickName'
+    FROM COMMENT c
+    LEFT JOIN USER u ON u.no = c.writer
+    WHERE c.board_no=?
+    `,[no]);
+
+    console.log(comment);
     res.locals.goods = goods[0];
+    res.locals.comments = comment;
     next();
+}
+
+module.exports.postComment = (req,res)=>{
+    const user = res.locals.user;
+    const boardNo = req.params.no;
+    const content = req.body.content;
+    const result = db.query("INSERT INTO COMMENT (board_no, content, writer) VALUES (?, ?, ?)",[boardNo,content,user.no]);
+    res.redirect("/goodsDetail/"+req.params.no);
+}
+
+
+module.exports.deleteComment = (req,res)=>{
+    const user = res.locals.user;
+    const bNo = req.params.bno;
+    const cNo = req.params.cno;
+    const result = db.query("DELETE FROM COMMENT WHERE writer=? AND no=? AND board_no=?",[user.no,cNo,bNo]);
+    res.send('ok');
 }

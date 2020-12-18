@@ -51,17 +51,48 @@
                 <input type="button" class="btn btn-success" value="거래완료" formaction="/goods/:no" />
             </div>
         </form>
-          <form id="form" class="form-inline justify-content-end" method="DELETE">
-              <div class="form-group mx-1">
-                  <input type="button" class="btn btn-danger" value="삭제" formaction="/goods/:no" />
-              </div>
-          </form>
+        <form id="form" class="form-inline justify-content-end" method="DELETE">
+            <div class="form-group mx-1">
+                <input type="button" class="btn btn-danger" value="삭제" formaction="/goods/:no" />
+            </div>
+        </form>
           <% } %>
+      </div>
+    </div>
+    <div class="comment-container">
+      <span class="comment-title">댓글</span>
+      <ul class="comment-ul">
+        <%for(i in comments){%>
+          <li class="comment-li">
+            <span class="comment-nickname"><%=comments[i].writerNickName%></span>
+            <span class="comment-content"><%=comments[i].content%></span>
+            <button class="comment-btn" onclick="deleteComment('/goodsDetail/<%=goods.no%>/comments/<%=comments[i].no%>')"><i class="fa fa-trash"></i></button>
+          </li>
+        <%}%>
+      </ul>
+      <form id="form" class="" method="POST" action="/goodsDetail/<%=goods.no%>/comments">
+        <div class="form-group mx-1">
+            <input type="text" class="form-control" name="content" style="width:90%;display: inline;"/>
+            <input type="submit" class="btn btn-primary" value="등록" />
         </div>
+      </form>
     </div>
     <footer>
       <%- include('./layout/footer') %>
     </footer>
   </div>
+  <script>
+    function deleteComment(url){
+
+      $.ajax({
+        method: 'delete',
+        url: url,
+        success: function(response) {
+          location.reload()
+        }
+    });
+
+    }
+  </script>
 </body>
 </html>
