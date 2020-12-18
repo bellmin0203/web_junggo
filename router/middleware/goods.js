@@ -131,9 +131,14 @@ module.exports.search = (req, res, next) => {
 }
 module.exports.goodsDetailMiddleware = (req,res,next) => {
     const no = req.params.no;
+    
     const goods = db.query("\
-    SELECT b.`no`, b.writer `writerNo`, u.nickname `writer`, title, content, price, bs.strName `status`, c.strName `category`, ct.strName `city`, photo FROM BOARD b\
-    WHERE b.`no`=?;\
+    SELECT b.`no`, u.nickname `writer`, title, content, price, bs.strName `status`, c.strName `category`, ct.strName `city`, photo FROM BOARD b\
+    LEFT JOIN `USER`u ON u.`no` = b.writer\
+  	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
+  	LEFT JOIN CITY_TYPE ct ON b.city = ct.id\
+    LEFT JOIN CATEGORY c ON b.category = c.id\
+    WHERE b.no=?\
     ",[no]);
 
     const comment = db.query(`SELECT c.no, c.dtUpdate, c.content, c.writer, u.nickname 'writerNickName'
