@@ -35,7 +35,7 @@ module.exports.updateMiddleware = (req, res, next) => {
         const no = req.params.no;
         const rows = db.query("UPDATE NOTICE SET title = ?, content = ? WHERE no = ?", [title, content, no]);
         console.log("공지사항 수정 완료");
-        res.redirect(301, "/notice/detail/"+no);
+        res.redirect(301, "/notice/detail/" + no);
         next();
     } catch (err) {
         next(err);
@@ -45,7 +45,7 @@ module.exports.updateMiddleware = (req, res, next) => {
 const ONE_PAGE_CONTENT_COUNT = 10;
 module.exports.listMiddleware = (req, res, next) => {
     try {
-        var curPage = req.params.page === undefined? 1 : parseInt(req.params.page);
+        var curPage = req.params.page === undefined ? 1 : parseInt(req.params.page);
         var sql = "SELECT no, writer, title, date_format(dtCreate, '%Y.%m.%d %H:%i') `dtCreate` FROM NOTICE ORDER BY dtCreate ASC;";
 
         const rows = db.query(sql);
@@ -55,15 +55,15 @@ module.exports.listMiddleware = (req, res, next) => {
         const maxPage = Math.ceil(rows.length / ONE_PAGE_CONTENT_COUNT);
         const nextPages = [];
         const prevPages = [];
-        const prevLimit = (maxPage - curPage) > 3 ? 3:(maxPage - curPage);
-        for(var i = curPage-1; i>0; i--){
+        const prevLimit = maxPage - curPage > 3 ? 3 : maxPage - curPage;
+        for (var i = curPage - 1; i > 0; i--) {
             prevPages.push(i);
-            if(prevPages.length >= (6 - prevLimit)) break;
+            if (prevPages.length >= 6 - prevLimit) break;
         }
 
-        for(var i = curPage + 1; i<=maxPage; i++){
+        for (var i = curPage + 1; i <= maxPage; i++) {
             nextPages.push(i);
-            if(nextPages.length >= 6-prevPages.length) break;
+            if (nextPages.length >= 6 - prevPages.length) break;
         }
 
         const pageInfo = {
@@ -71,8 +71,8 @@ module.exports.listMiddleware = (req, res, next) => {
             nowPage: curPage,
             nextPages: nextPages,
             prevPages: prevPages.reverse(),
-            onePageContent: ONE_PAGE_CONTENT_COUNT
-        }
+            onePageContent: ONE_PAGE_CONTENT_COUNT,
+        };
 
         rows.forEach(function (item) {
             sql = "SELECT nickname FROM USER WHERE no = ?;";

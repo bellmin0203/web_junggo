@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('./layout/head') %>
+    </head>
+    <body>
+        <div class="wrap">
+            <header><%- include('./layout/header') %></header>
+            <div class="container">
+                <form id="form" method="POST" action="/profile/update/<%= user.no %>?_method=PUT" onsubmit="return checkForm();">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" class="text-center" colspan="2">기본 정보</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-center">아이디</th>
+                                <td><%= user.id %></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-center">닉네임</th>
+                                <td><input type="text" name="nickname" id="nickname" maxlength="8" /><span class="form-text">닉네임은 2~8자 이내여야 합니다.</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-center">가입일자</th>
+                                <td><%= user.dtCreate %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-inline justify-content-end">
+                        <input type="button" class="btn btn-outline-dark btn-sm m-1" value="등록" onclick="modify()" />
+                        <a href="/profile" class="btn btn-outline-dark btn-sm m-1">취소</a>
+                    </div>
+                </form>
+            </div>
+            <footer><%- include('./layout/footer') %></footer>
+        </div>
+        <script>
+            function checkForm() {
+                if ($("#nickname").val().trim() == "") {
+                    var message = "닉네임을 입력해 주세요";
+                    $("#nickname").val("");
+                    $("#nickname").focus();
+                    alert(message);
+                    return false;
+                }
+            }
+
+            function modify() {
+                var chk = confirm("등록 하시겠습니까?");
+                if (chk) {
+                    // alert("수정하였습니다.");
+                    $("#form").submit();
+                }
+            }
+        </script>
+    </body>
+</html>

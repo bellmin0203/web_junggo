@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <%- include('./layout/head') %>
-  </head>
-  <body>
-    <div class="wrap">
-      <header><%- include('./layout/header') %></header>
-      <div class="container">
-        <div class="row">
-          <table class="table table-bordered" style="height: 500px">
-            <thead>
-              <tr class="table-active">
-                <th scope="col" style="width: 60%"><%= rows[0].title %></th>
-                <th scope="col" style="width: 40%" class="text-right">
-                  <%= rows[0].dtCreate %>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colspan="2" class="p-5"><%- rows[0].content %></td>
-              </tr>
-            </tbody>
-          </table>
+    <head>
+        <%- include('./layout/head') %>
+    </head>
+    <body>
+        <div class="wrap">
+            <header><%- include('./layout/header') %></header>
+            <div class="container">
+                <div class="row">
+                    <table class="table table-bordered" style="height: 500px">
+                        <thead>
+                            <tr class="table-active">
+                                <th scope="col" style="width: 60%"><%= rows[0].title %></th>
+                                <th scope="col" style="width: 40%" class="text-right"><%= rows[0].dtCreate %></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" class="p-5"><%- rows[0].content %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <% if(user && (user['grade'] == 2 || writer)){ %>
+                <form id="form" class="form-inline justify-content-end" method="POST" style="margin-left: -15px; margin-right: -15px">
+                    <div class="form-group mx-1">
+                        <input type="submit" class="btn btn-secondary" value="수정" formaction="/notice/<%= rows[0].no %>" />
+                    </div>
+                    <div class="form-group mx-1">
+                        <input type="button" class="btn btn-secondary" value="삭제" onclick="del()" formaction="/notice/<%= rows[0].no %>?_method=DELETE" />
+                    </div>
+                </form>
+                <% } %>
+            </div>
+            <footer><%- include('./layout/footer') %></footer>
         </div>
-        <% if(user && (user['grade'] == 2 || writer)){ %>
-          <form id="form" class="form-inline justify-content-end" method="POST" style="margin-left: -15px; margin-right: -15px;">
-            <div class="form-group mx-1">
-              <input type="submit" class="btn btn-secondary" value="수정" formaction="/notice/<%= rows[0].no %>"/>
-            </div>
-            <div class="form-group mx-1">
-              <input type="submit" class="btn btn-secondary" value="삭제" onclick="del()" formaction="/notice/<%= rows[0].no %>?_method=DELETE"/>
-            </div>
-          </form>
-        <% } %>
-      </div>
-      <footer><%- include('./layout/footer') %></footer>
-    </div>
-    <script>
-      function del(){
-        var chk = confirm("정말 삭제하시겠습니까?");
-        if(chk){
-          $("#form").submit();
-        }
-      }
-    </script>
-  </body>
+        <script>
+            function del() {
+                var chk = confirm("정말 삭제하시겠습니까?");
+                if (chk) {
+                    alert("삭제하였습니다.");
+                    $("#form").submit();
+                }
+            }
+        </script>
+    </body>
 </html>

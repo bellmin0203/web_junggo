@@ -32,7 +32,7 @@ app.use("/", (req, res, next) => {
     console.log("HTTP " + req.method + " " + req.path);
     next();
 });
-app.use('/', router);
-app.use('/images', express.static('images'));
+app.use("/", router);
+app.use("/images", express.static("images"));
 
 app.listen(PORT, () => console.log("app listening at http://localhost:", PORT));

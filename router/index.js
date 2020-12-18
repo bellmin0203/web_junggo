@@ -50,11 +50,11 @@ router.get("/noticeWrite", auth.verifyToken, (req, res) =>
     res.render("noticeWrite", {
         title: "공지사항 글쓰기 - 평화나라",
         page: "noticeWrite",
-        user: res.locals.user
+        user: res.locals.user,
     })
 );
 router.post("/noticeWrite", auth.verifyToken, notice.writeMiddleware, (req, res) => res.redirect(301, "/notice"));
-router.post("/uploadImage/notice", upload.single('file'), (req, res) => res.send("/images/"+req.file.filename));
+router.post("/uploadImage/notice", upload.single("file"), (req, res) => res.send("/images/" + req.file.filename));
 
 /* 공지사항 삭제 */
 router.delete("/notice/:no", auth.verifyToken, notice.deleteMiddleware, (req, res) => res.redirect(301, "/notice"));
@@ -71,7 +71,7 @@ router.get("/goods", auth.loginCheck, goods.goodsListMiddleware, (req, res) =>
         title: "매물목록 - 평화나라",
         page: "goodsList",
         user: res.locals.user,
-        pageInfo : res.locals.pageInfo,
+        pageInfo: res.locals.pageInfo,
         goods: res.locals.goods,
     })
 );
@@ -81,7 +81,7 @@ router.get("/goods/:page", auth.loginCheck, goods.goodsListMiddleware, (req, res
         title: "매물목록 - 평화나라",
         page: "goodsList",
         user: res.locals.user,
-        pageInfo : res.locals.pageInfo,
+        pageInfo: res.locals.pageInfo,
         goods: res.locals.goods,
     })
 );
@@ -115,10 +115,14 @@ router.get("/detail", (req, res) => res.render("detail", { page: "detail" }));
 //
 // 프로필
 //
-router.get("/profile", auth.verifyToken, (req, res) => res.render("profile", {
-    title: "회원정보 - 평화나라",
-    page: "profile",
-    user: res.locals.user
-}))
+router.get("/profile", auth.verifyToken, (req, res) =>
+    res.render("profile", {
+        title: "회원정보 - 평화나라",
+        page: "profile",
+        user: res.locals.user,
+    })
+);
+router.post("/profile/:no", auth.verifyToken, login.profileModify);
+router.put("/profile/update/:no", auth.verifyToken, login.profileUpdate, (req, res) => res.redirect(301, "/profile"));
 
 module.exports = router;
