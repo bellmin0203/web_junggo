@@ -56,14 +56,29 @@ module.exports.goodsListMiddleware = function(req, res, next){
         prevPages : prevPages.reverse(),
         onePageContent : ONE_PAGE_CONTENT_COUNT,
     }
-    console.log(pageInfo);
     res.locals.goods = goods;
     res.locals.pageInfo = pageInfo;
     next();
 }
+
 /* GET '/' => 최근 중고 매물 */
 module.exports.recentlyGoods = (req, res, next) => {
     const recGoods = db.query("SELECT no, title, price, photo FROM BOARD ORDER BY dtCreate DESC LIMIT 8");
     res.locals.goods = recGoods;
+    next();
+}
+
+module.exports.goodsDetailMiddleware = (req,res,next) => {
+    const no = req.params.no;
+    const goods = db.query("\
+    SELECT b.`no`, b.writer `writerNo`, u.nickname `writer`, title, content, price, bs.strName `status`, c.strName `category`, ct.strName `city`, photo FROM BOARD b\
+	LEFT JOIN `USER`u ON u.`no` = b.writer\
+	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
+	LEFT JOIN CITY_TYPE ct ON b.city = ct.id\
+    LEFT JOIN CATEGORY c ON b.category = c.id\
+    WHERE b.`no`=?;\
+    ",[no]);
+    console.log(goods[0]);
+    res.locals.goods = goods[0];
     next();
 }

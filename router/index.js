@@ -86,6 +86,16 @@ router.get("/goods/:page", auth.loginCheck, goods.goodsListMiddleware, (req, res
     })
 );
 
+
+router.get("/goodsDetail/:no", auth.loginCheck, goods.goodsDetailMiddleware, (req, res) =>
+    res.render("goodsDetail", {
+        title: "매물상세 - 평화나라",
+        page: "goodsDetail",
+        user: res.locals.user,
+        goods: res.locals.goods,
+    })
+);
+
 //
 // 매물등록
 //

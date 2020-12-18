@@ -9,8 +9,55 @@
       <%- include('./layout/header') %>
     </header>
     <div>
-      goods Detail
-      글번호 : <%= no %>
+      <div class="container">
+        <div class="row">
+            <table class="table table-bordered" style="height: 500px">
+                <thead>
+                    <tr class="table-active">
+                        <th colspan="2" scope="col" style="width: 100%"><%= goods.title %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="1" class="p-5" style="width: 50%">
+                        <img src="/images/<%=goods.photo%>" alt="" width="100%">
+                        </td>
+                        <td colspan="1" class="p-5" style="width: 50%">
+                        <p>
+                          <span class="goodsInfoBox"><%= goods.status%></span>
+                          <span class="goodsInfoBox">지역 : <%= goods.city %></span>
+                          <span class="goodsInfoBox">카테고리 : <%= goods.category %></span>
+                          <span class="goodsInfoBox">가격 : <%= goods.price %> 원</span>
+                        </p>
+                        <%- goods.content %>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+          <% if(user && ((user['grade'] == 2 || user.no == goods.writerNo))){ %>
+          <form id="form" class="form-inline justify-content-end" method="DELETE" >
+              <div class="form-group mx-1">
+                  <input type="button" class="btn btn-success" value="거래중" formaction="/goods/:no" />
+              </div>
+          </form>
+          <form id="form" class="form-inline justify-content-end" method="DELETE" >
+              <div class="form-group mx-1">
+                  <input type="button" class="btn btn-success" value="예약중" formaction="/goods/:no" />
+              </div>
+          </form>
+          <form id="form" class="form-inline justify-content-end" method="DELETE" >
+            <div class="form-group mx-1">
+                <input type="button" class="btn btn-success" value="거래완료" formaction="/goods/:no" />
+            </div>
+        </form>
+          <form id="form" class="form-inline justify-content-end" method="DELETE">
+              <div class="form-group mx-1">
+                  <input type="button" class="btn btn-danger" value="삭제" formaction="/goods/:no" />
+              </div>
+          </form>
+          <% } %>
+        </div>
     </div>
     <footer>
       <%- include('./layout/footer') %>
