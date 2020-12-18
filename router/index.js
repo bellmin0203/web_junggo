@@ -22,7 +22,9 @@ const upload = multer({
     }),
 });
 
-router.get("/", auth.loginCheck, goods.recentlyGoods, (req, res) => res.render("index", { title: "평화나라 - 중고 거래 사이트", user: res.locals.user, recGoods: res.locals.goods }));
+router.get("/", auth.loginCheck, goods.recentlyGoods, goods.searchTop, (req, res) => res.render("index", { title: "평화나라 - 중고 거래 사이트", user: res.locals.user, recGoods: res.locals.goods, searchHis: res.locals.searchHis }));
+
+router.get("/search", goods.search);
 //
 // 로그인
 //
@@ -135,6 +137,7 @@ router.get("/profile", auth.verifyToken, (req, res) =>
         user: res.locals.user,
     })
 );
+/* 프로필 수정 */
 router.post("/profile/:no", auth.verifyToken, login.profileModify);
 router.put("/profile/update/:no", auth.verifyToken, login.profileUpdate, (req, res) => res.redirect(301, "/profile"));
 

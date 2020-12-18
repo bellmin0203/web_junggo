@@ -4,6 +4,36 @@
     <%- include('./layout/head') %>
   </head>
   <body>
+    <% if(searchHis){ var searchHis = searchHis; } else { var searchHis = false; } %>
+<script type="text/javascript">
+if("<%= searchHis %>"){
+  var word_array = [
+    { text: "<%=searchHis[0].word%>", weight: 20, link: "#" },
+    { text: "<%=searchHis[1].word%>", weight: 14, link: "http://jquery.com/" },
+    { text: "<%=searchHis[2].word%>", weight: 11, link: "#" },
+    { text: "<%=searchHis[3].word%>", weight: 12, link: "#" },
+    { text: "<%=searchHis[4].word%>", weight: 10, link: "#" },
+    // ...as many words as you want
+  ];
+} else {
+  var word_array = [
+    { text: "아이폰12", weight: 20, link: "#" },
+    { text: "닌텐도 스위치", weight: 14, link: "http://jquery.com/" },
+    { text: "아이패드 프로", weight: 11, link: "#" },
+    { text: "애플 펜슬", weight: 12, link: "#" },
+    { text: "모니터", weight: 10, link: "#" },
+    // ...as many words as you want
+  ];
+}
+
+  $(function () {
+    // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+    $("#word-cloud").jQCloud(word_array, {
+      shape: "rectangular",
+      autoResize: true,
+    });
+  });
+</script>
     <div id="wrap">
       <!-- header -->
       <header><%- include('./layout/header') %></header>
@@ -11,17 +41,20 @@
       <section class="container">
         <div class="row justify-content-center m-4">
           <div class="input-group col-md-6">
-            <input
-              type="text"
-              name="input-word"
-              class="form-control"
-              placeholder="검색어를 입력해주세요."
-            />
-            <div class="input-group-append">
-              <button class="btn btn-secondary" type="button">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>
+            <form action="/search" method="GET" class="form-inline w-100">
+              <input
+                type="text"
+                name="search_word"
+                class="form-control"
+                style="width: 90%;"
+                placeholder="검색어를 입력해주세요."
+              />
+              <div class="input-group-append form-group" style="width: 10%;">
+                <button type="submit" class="btn btn-secondary" type="button">
+                  <i class="fa fa-search"></i>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
         <div class="row justify-content-center">
