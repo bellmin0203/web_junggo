@@ -20,7 +20,7 @@ module.exports.goodsWriteInsertMiddleware = function (req, res, next) {
     return res.redirect(301, "/");
 };
 
-const ONE_PAGE_CONTENT_COUNT = 10;
+const ONE_PAGE_CONTENT_COUNT = 8;
 module.exports.goodsListMiddleware = function (req, res, next) {
     const page = req.params.page === undefined ? 1 : parseInt(req.params.page);
 
@@ -31,6 +31,7 @@ module.exports.goodsListMiddleware = function (req, res, next) {
 	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
 	LEFT JOIN CITY_TYPE ct ON b.city = ct.id\
     LEFT JOIN CATEGORY c ON b.category = c.id\
+    ORDER BY b.dtCreate DESC\
     LIMIT ?, ?;\
     ",
         [(page - 1) * ONE_PAGE_CONTENT_COUNT, ONE_PAGE_CONTENT_COUNT]
@@ -190,6 +191,7 @@ module.exports.myGoodsList = (req, res, next) => {
   	LEFT JOIN COMMENT cm ON b.no = cm.board_no\
     WHERE b.writer=?\
     GROUP BY b.no\
+    ORDER BY b.dtCreate DESC\
     ",
         [user.no]
     );
