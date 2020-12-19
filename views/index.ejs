@@ -4,36 +4,6 @@
     <%- include('./layout/head') %>
   </head>
   <body>
-    <% if(searchHis){ var searchHis = searchHis; } else { var searchHis = false; } %>
-<script type="text/javascript">
-if("<%= searchHis %>"){
-  var word_array = [
-    { text: "<%=searchHis[0].word%>", weight: 20, link: "#" },
-    { text: "<%=searchHis[1].word%>", weight: 14, link: "http://jquery.com/" },
-    { text: "<%=searchHis[2].word%>", weight: 11, link: "#" },
-    { text: "<%=searchHis[3].word%>", weight: 12, link: "#" },
-    { text: "<%=searchHis[4].word%>", weight: 10, link: "#" },
-    // ...as many words as you want
-  ];
-} else {
-  var word_array = [
-    { text: "아이폰12", weight: 20, link: "#" },
-    { text: "닌텐도 스위치", weight: 14, link: "http://jquery.com/" },
-    { text: "아이패드 프로", weight: 11, link: "#" },
-    { text: "애플 펜슬", weight: 12, link: "#" },
-    { text: "모니터", weight: 10, link: "#" },
-    // ...as many words as you want
-  ];
-}
-
-  $(function () {
-    // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
-    $("#word-cloud").jQCloud(word_array, {
-      shape: "rectangular",
-      autoResize: true,
-    });
-  });
-</script>
     <div id="wrap">
       <!-- header -->
       <header><%- include('./layout/header') %></header>
@@ -100,5 +70,23 @@ if("<%= searchHis %>"){
       </section>
       <footer><%- include('./layout/footer') %></footer>
     </div>
+    <script type="text/javascript">
+        var word_array = [
+          { text: "<%=searchHis[0].word%>", weight: 20, link: "/search?word=<%=searchHis[0].word%>" },
+          { text: "<%=searchHis[1].word%>", weight: 14, link: "/search?word=<%=searchHis[1].word%>" },
+          { text: "<%=searchHis[2].word%>", weight: 11, link: "/search?word=<%=searchHis[2].word%>" },
+          { text: "<%=searchHis[3].word%>", weight: 12, link: "/search?word=<%=searchHis[3].word%>" },
+          { text: "<%=searchHis[4].word%>", weight: 10, link: "/search?word=<%=searchHis[4].word%>" },
+          // ...as many words as you want
+        ];
+         
+        $(function () {
+          // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+          $("#word-cloud").jQCloud(word_array, {
+            shape: "rectangular",
+            autoResize: true,
+          });
+        });
+      </script>
   </body>
 </html>
