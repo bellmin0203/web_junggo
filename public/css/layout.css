@@ -143,19 +143,24 @@ body {
   margin: 10px auto;
 }
 .goodsListItem {
+  margin: 10px;
+  padding: 10PX;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
   list-style: none;
   display: inline-block;
   text-align: center;
 }
 .goodsListItem:hover {
   cursor: pointer;
+  opacity: 0.8;
 }
 
 .goodsInfoBox{
   display: inline-block;
-  border: 1px solid gray;
-  padding: 2px 6px;
+  border: 1px solid #dee2e6;
   border-radius: 4px;
+  padding: 2px 6px;
   margin-top: 10px;
 }
 
