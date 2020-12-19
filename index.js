@@ -1,11 +1,8 @@
-// ./app.js
-
+// /index.js
 const dotenv = require("dotenv");
 const path = require("path");
 const PORT = 80;
 dotenv.config({ path: path.join(process.cwd(), "config", ".env.development") });
-
-const db = require("./lib/db");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -21,7 +18,7 @@ const router = require("./router");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// method-override
+// method-override, form 태그에서 POST, GET 이외 PUT, DELETE로 전달하기 위한 외부 모듈
 app.use(methodOverride("_method"));
 // 뷰엔진 설정
 app.set("view engine", "ejs");
