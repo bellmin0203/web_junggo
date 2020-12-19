@@ -264,3 +264,10 @@ body {
   font-size: 14px;
   float: right;
 }
+
+.board-btn{
+  display: inline;
+  margin: 0px 2px;
+  font-size: 14px;
+  padding: 2px 5px;
+}

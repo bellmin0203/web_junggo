@@ -14,7 +14,17 @@
             <table class="table table-bordered" style="height: 500px">
                 <thead>
                     <tr class="table-active">
-                        <th colspan="2" scope="col" style="width: 100%"><%= goods.title %></th>
+                        <th colspan="2" scope="col" style="width: 100%"><%= goods.title %>
+                          <% if(user && ((user['grade'] == 2 || user.no == goods.writerNo))){ %>
+                          <span style="float: right;">
+                            
+                              <button class="board-btn btn btn-<% if(goods.status!='판매중'){%>secondary<%}else{%>success<%}%>" onclick="putStatus('<%=goods.no%>',1)">거래중</button>
+                              <button class="board-btn btn btn-<% if(goods.status!='예약중'){%>secondary<%}else{%>success<%}%>" onclick="putStatus('<%=goods.no%>',2)">예약중</button>
+                              <button class="board-btn btn btn-<% if(goods.status!='판매완료'){%>secondary<%}else{%>success<%}%>" onclick="putStatus('<%=goods.no%>',3)">판매완료</button>
+                            <button class="board-btn btn btn-danger" onclick="deleteGoods('<%=goods.no%>')">삭제</button>
+                          </span>
+                          <%}%>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,38 +35,15 @@
                         <td colspan="1" class="p-5" style="width: 50%">
                         <p>
                           <span class="goodsInfoBox"><%= goods.status%></span>
-                          <span class="goodsInfoBox">지역 : <%= goods.city %></span>
-                          <span class="goodsInfoBox">카테고리 : <%= goods.category %></span>
-                          <span class="goodsInfoBox">가격 : <%= goods.price %> 원</span>
+                          <span class="goodsInfoBox"><%= goods.city %></span>
+                          <span class="goodsInfoBox"><%= goods.category %></span>
+                          <span class="goodsInfoBox"><%= goods.price %> 원</span>
                         </p>
                         <%- goods.content %>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            
-          <% if(user && ((user['grade'] == 2 || user.no == goods.writerNo))){ %>
-          <form id="form" class="form-inline justify-content-end" method="DELETE" >
-              <div class="form-group mx-1">
-                  <input type="button" class="btn btn-success" value="거래중" formaction="/goods/:no" />
-              </div>
-          </form>
-          <form id="form" class="form-inline justify-content-end" method="DELETE" >
-              <div class="form-group mx-1">
-                  <input type="button" class="btn btn-success" value="예약중" formaction="/goods/:no" />
-              </div>
-          </form>
-          <form id="form" class="form-inline justify-content-end" method="DELETE" >
-            <div class="form-group mx-1">
-                <input type="button" class="btn btn-success" value="거래완료" formaction="/goods/:no" />
-            </div>
-        </form>
-        <form id="form" class="form-inline justify-content-end" method="DELETE">
-            <div class="form-group mx-1">
-                <input type="button" class="btn btn-danger" value="삭제" formaction="/goods/:no" />
-            </div>
-        </form>
-          <% } %>
       </div>
     </div>
     <div class="comment-container">
@@ -66,7 +53,9 @@
           <li class="comment-li">
             <span class="comment-nickname"><%=comments[i].writerNickName%></span>
             <span class="comment-content"><%=comments[i].content%></span>
-            <button class="comment-btn" onclick="deleteComment('/goodsDetail/<%=goods.no%>/comments/<%=comments[i].no%>')"><i class="fa fa-trash"></i></button>
+            <% if(comments[i].writer==user.no){%>
+              <button class="comment-btn" onclick="deleteComment('/goodsDetail/<%=goods.no%>/comments/<%=comments[i].no%>')"><i class="fa fa-trash"></i></button>
+            <%}%>
           </li>
         <%}%>
       </ul>
@@ -99,6 +88,26 @@
         alert(message);
         return false;
       }
+    }
+    function putStatus(no,status){
+      $.ajax({
+        method: 'put',
+        url: '/goods/'+no+'/status',
+        data: {status:status},
+        success: function(response) {
+          location.reload()
+        }
+      });
+    }
+    function deleteGoods(no){
+      $.ajax({
+        method: 'delete',
+        url: '/goods/'+no,
+        success: function(response) {
+          location.href='/';
+        }
+      });
+
     }
   </script>
 </body>

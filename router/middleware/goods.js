@@ -139,7 +139,7 @@ module.exports.goodsDetailMiddleware = (req, res, next) => {
 // 해당 매물 조회
     const goods = db.query(
         "\
-    SELECT b.`no`, u.nickname `writer`, title, content, price, bs.strName `status`, c.strName `category`, ct.strName `city`, photo FROM BOARD b\
+    SELECT b.`no`, u.nickname `writer`, title, content, price, bs.strName `status`, c.strName `category`, ct.strName `city`, photo, b.writer 'writerNo' FROM BOARD b\
     LEFT JOIN `USER`u ON u.`no` = b.writer\
   	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
   	LEFT JOIN CITY_TYPE ct ON b.city = ct.id\
@@ -197,4 +197,22 @@ module.exports.myGoodsList = (req, res, next) => {
 
     res.locals.goods = goods;
     next();
+};
+
+
+/* goods 상태 변경 */
+module.exports.EditGoodsStatus = (req, res, next) => {
+    const user = res.locals.user;
+    const no = req.params.no;
+    const status = req.body.status;
+    db.query(`UPDATE BOARD SET status=? WHERE writer=? AND no=?`,[status,user.no,no]);
+    res.send("OK");
+};
+
+/* goods 삭제 */
+module.exports.DeleteGoodsStatus = (req, res, next) => {
+    const user = res.locals.user;
+    const no = req.params.no;
+    db.query(`DELETE FROM BOARD WHERE writer=? AND no=?`,[user.no,no]);
+    res.send("OK");
 };

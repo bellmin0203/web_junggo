@@ -112,6 +112,10 @@ router.get("/goodsWrtie", auth.verifyToken, goods.goodsWriteMiddleware, (req, re
         category: res.locals.category,
     })
 );
+// 매물 삭제
+router.put("/goods/:no/status", auth.verifyToken, goods.EditGoodsStatus);
+router.delete("/goods/:no", auth.verifyToken, goods.DeleteGoodsStatus);
+
 router.post("/goodsWrite", upload.single("photo"), goods.goodsWriteInsertMiddleware);
 // 댓글 등록
 router.post("/goodsDetail/:no/comments", auth.verifyToken, goods.postComment);
