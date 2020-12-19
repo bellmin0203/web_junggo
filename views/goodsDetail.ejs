@@ -91,7 +91,6 @@
         }
       });
     }
-
     function onWriteSubmit(){
       if($('input[name=content]').val().trim() == ""){
         var message = "댓글을 입력해 주세요";
@@ -100,11 +99,6 @@
         alert(message);
         return false;
       }
-    }
-
-    function getCookie(name) {
-      var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-      return value? value[2] : null;
     }
   </script>
 </body>
