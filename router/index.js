@@ -22,9 +22,19 @@ const upload = multer({
     }),
 });
 
-router.get("/", auth.loginCheck, goods.recentlyGoods, goods.searchTop, (req, res) => res.render("index", { title: "평화나라 - 중고 거래 사이트", user: res.locals.user, recGoods: res.locals.goods, searchHis: res.locals.searchHis }));
-
-router.get("/search", goods.search);
+router.get("/", auth.loginCheck, goods.recentlyGoods, goods.searchTop, (req, res) =>
+    res.render("index", { title: "평화나라 - 중고 거래 사이트", user: res.locals.user, recGoods: res.locals.goods, searchHis: res.locals.searchHis })
+);
+// 검색
+router.get("/search", goods.search, (req, res) =>
+    res.render("goodsList", {
+        title: "매물목록 - 평화나라",
+        page: "goodsList",
+        user: res.locals.user,
+        pageInfo: res.locals.pageInfo,
+        goods: res.locals.goods,
+    })
+);
 //
 // 로그인
 //
@@ -88,7 +98,6 @@ router.get("/goods/:page", auth.loginCheck, goods.goodsListMiddleware, (req, res
     })
 );
 
-
 router.get("/goodsDetail/:no", auth.loginCheck, goods.goodsDetailMiddleware, (req, res) =>
     res.render("goodsDetail", {
         title: "매물상세 - 평화나라",
@@ -113,8 +122,8 @@ router.get("/goodsWrtie", auth.verifyToken, goods.goodsWriteMiddleware, (req, re
 router.post("/goodsWrite", upload.single("photo"), goods.goodsWriteInsertMiddleware);
 router.get("/goods/:no", auth.loginCheck, (req, res) => res.render("goodsDetail", { page: "goodsDetail", user: res.locals.user }));
 
-router.post("/goodsDetail/:no/comments",auth.verifyToken, goods.postComment);
-router.delete("/goodsDetail/:bno/comments/:cno",auth.verifyToken, goods.deleteComment);
+router.post("/goodsDetail/:no/comments", auth.verifyToken, goods.postComment);
+router.delete("/goodsDetail/:bno/comments/:cno", auth.verifyToken, goods.deleteComment);
 //
 // 내 매물
 //
