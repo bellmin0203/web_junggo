@@ -115,7 +115,6 @@ module.exports.search = (req, res, next) => {
         prevPages : prevPages.reverse(),
         onePageContent : ONE_PAGE_CONTENT_COUNT,
     }
-    console.log(pageInfo);
     res.locals.goods = goods;
     res.locals.pageInfo = pageInfo;
 
@@ -129,6 +128,7 @@ module.exports.search = (req, res, next) => {
         db.query("INSERT INTO SEARCH_HISTORY(word) VALUES(?)", [word]);
     }
 }
+
 module.exports.goodsDetailMiddleware = (req,res,next) => {
     const no = req.params.no;
     
@@ -169,4 +169,22 @@ module.exports.deleteComment = (req,res)=>{
     const cNo = req.params.cno;
     const result = db.query("DELETE FROM COMMENT WHERE writer=? AND no=? AND board_no=?",[user.no,cNo,bNo]);
     res.send('ok');
+}
+
+/* GET 내 매물 */
+module.exports.myGoodsList = (req, res, next) => {
+    const user = res.locals.user;
+
+    const goods = db.query("\
+    SELECT b.`no`, title, b.content, price, bs.strName `status`, photo, b.dtUpdate, COUNT(cm.no) 'commentCount' FROM BOARD b\
+  	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
+  	LEFT JOIN COMMENT cm ON b.no = cm.board_no\
+    WHERE b.writer=?\
+    GROUP BY b.no\
+    ",[user.no]);
+
+
+    console.log(goods)
+    res.locals.goods = goods;
+    next();
 }

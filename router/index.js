@@ -118,11 +118,12 @@ router.delete("/goodsDetail/:bno/comments/:cno",auth.verifyToken, goods.deleteCo
 //
 // 내 매물
 //
-router.get("/my", auth.verifyToken, (req, res) =>
+router.get("/my", auth.verifyToken, goods.myGoodsList, (req, res) =>
     res.render("my", {
         title: "내 매물 - 평화나라",
         page: "my",
         user: res.locals.user,
+        goods: res.locals.goods,
     })
 );
 router.get("/detail", (req, res) => res.render("detail", { page: "detail" }));

@@ -9,7 +9,20 @@
       <%- include('./layout/header') %>
     </header>
     <div class="container">
-      <%= page %>
+      <ul style="max-width: 850px; margin: auto;">
+        <% for(i in goods) { %>
+            <li onclick="location.href='/goodsDetail/<%= goods[i].no %>'" class="myGoodsListItem">
+              <img src="/images/<%= goods[i].photo %>" alt="" width="150px" height="150px" class="myGoodsImg">
+              <div class="myGoodsInfo">
+                <p class="myGoodsTitle"><%= goods[i].title %></p>
+                <p class="myGoodsStatus"><%= goods[i].status %></p>
+                <p class="myGoodsCommentCount"><i class="fa fa-eye" aria-hidden="true"></i> <%= goods[i].commentCount %></p>
+                <p class="myGoodsContent"><%- goods[i].content %></p>
+                <p class="myGoodsDate"><%= goods[i].dtUpdate %></p>
+              </div>
+            </li>
+        <% } %>
+      </ul>
     </div>
     <footer>
       <%- include('./layout/footer') %>
