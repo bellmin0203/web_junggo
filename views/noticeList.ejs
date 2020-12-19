@@ -17,13 +17,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% for(var i = length-((pageInfo.nowPage*pageInfo.onePageContent)-pageInfo.onePageContent); i > length-(pageInfo.nowPage*pageInfo.onePageContent); i--){ if(i < 0){ break; } else { var data = rows[i]; %>
+                        <% for(var i = length-((pageInfo.nowPage*pageInfo.onePageContent)-pageInfo.onePageContent); i > length-(pageInfo.nowPage*pageInfo.onePageContent); i--){ if(i < 0){ break; }
+                        else { var data = notice[i]; %>
                         <tr class="text-center">
                             <td scope="rows"><%= data.no %></td>
                             <td style="width: 60%">
                                 <a style="color: #333" href="/notice/detail/<%=data.no%>"><%= data.title %></a>
                             </td>
-                            <td><%= writerRows[i] %></td>
+                            <td><%= data.writer %></td>
                             <td><%= data.dtCreate %></td>
                         </tr>
                         <% } } %>
@@ -41,14 +42,12 @@
                     </li>
                     <% for(i in pageInfo.prevPages){ %>
                     <li class="page-item">
-                        <a class="page-link" href="/notice/<%=pageInfo.prevPages[i]%>"><%=pageInfo.prevPages[i]%>
-                        </a>
+                        <a class="page-link" href="/notice/<%=pageInfo.prevPages[i]%>"><%=pageInfo.prevPages[i]%> </a>
                     </li>
                     <% } %>
 
                     <li class="page-item active">
-                        <a href="/notice/<%=pageInfo.nowPage%>" class="page-link">
-                        <%=pageInfo.nowPage%></a>
+                        <a href="/notice/<%=pageInfo.nowPage%>" class="page-link"> <%=pageInfo.nowPage%></a>
                     </li>
 
                     <% for(i in pageInfo.nextPages){ %>
