@@ -80,6 +80,7 @@ module.exports.searchTop = (req, res, next) => {
 /* GET '/search' => 검색 이벤트 */
 module.exports.search = (req, res, next) => {
     const word = req.query.word;
+    const searchWord = word.replace(' ', '|');  // MySQL의 REGEXP 정규식을 사용하기 위해 공백을 '|' 문자로 치환
     const page = req.params.page===undefined?1:parseInt(req.params.page);
 
     const goods = db.query("\
@@ -88,9 +89,9 @@ module.exports.search = (req, res, next) => {
   	LEFT JOIN BOARD_STATUS bs ON b.status = bs.id\
   	LEFT JOIN CITY_TYPE ct ON b.city = ct.id\
     LEFT JOIN CATEGORY c ON b.category = c.id\
-    WHERE b.title LIKE ? OR b.content LIKE ?\
+    WHERE b.title REGEXP ? OR b.content REGEXP ?\
     LIMIT ?, ?;\
-    ",['%'+word+'%', '%'+word+'%', (page-1)*ONE_PAGE_CONTENT_COUNT, ONE_PAGE_CONTENT_COUNT]);
+    ",[word, word, (page-1)*ONE_PAGE_CONTENT_COUNT, ONE_PAGE_CONTENT_COUNT]);
     const rows = db.query("SELECT count(*) 'count' FROM BOARD")
     const maxPage = Math.ceil((rows[0].count)/ONE_PAGE_CONTENT_COUNT)
     const nextPages = [];
