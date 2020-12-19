@@ -15,7 +15,7 @@
       <% for(i in goods) { %>
           <li onclick="location.href='/goodsDetail/<%= goods[i].no %>'" class="goodsListItem" >
             <img src="/images/<%= goods[i].photo %>" alt="" width="150px" height="150px">
-            <p><%= goods[i].title %></p>
+            <p style="display: block; width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><%= goods[i].title %></p>
           </li>
       <% } %>
     </ul>
