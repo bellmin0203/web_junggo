@@ -9,7 +9,8 @@ module.exports.verifyToken = (req, res, next) => {
             res.locals.user = decoded;
             next();
         } else {
-            res.status(401).send({ error: 'unauthorized' });
+            // res.status(401).send({ error: 'unauthorized' });
+            res.status(401).send('<script type="text/javascript">alert("로그인을 해주세요!"); history.back();</script>');
         }
     } catch (err) {
         res.status(401).json({ error: 'token expired' });

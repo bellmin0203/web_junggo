@@ -70,7 +70,7 @@
           </li>
         <%}%>
       </ul>
-      <form id="form" class="" method="POST" action="/goodsDetail/<%=goods.no%>/comments">
+      <form id="form" class="" method="POST" action="/goodsDetail/<%=goods.no%>/comments" onsubmit="return onWriteSubmit();">
         <div class="form-group mx-1">
             <input type="text" class="form-control" name="content" style="width:90%;display: inline;"/>
             <input type="submit" class="btn btn-primary" value="등록" />
@@ -83,15 +83,28 @@
   </div>
   <script>
     function deleteComment(url){
-
       $.ajax({
         method: 'delete',
         url: url,
         success: function(response) {
           location.reload()
         }
-    });
+      });
+    }
 
+    function onWriteSubmit(){
+      if($('input[name=content]').val().trim() == ""){
+        var message = "댓글을 입력해 주세요";
+        $('input[name=content]').val("");
+        $('input[name=content]').focus();
+        alert(message);
+        return false;
+      }
+    }
+
+    function getCookie(name) {
+      var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+      return value? value[2] : null;
     }
   </script>
 </body>
