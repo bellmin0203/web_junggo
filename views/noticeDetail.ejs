@@ -28,7 +28,7 @@
                         <input type="submit" class="btn btn-secondary" value="수정" formaction="/notice/<%= rows[0].no %>" />
                     </div>
                     <div class="form-group mx-1">
-                        <input type="button" class="btn btn-secondary" value="삭제" onclick="del()" formaction="/notice/<%= rows[0].no %>?_method=DELETE" />
+                        <input type="submit" class="btn btn-secondary" value="삭제" onclick="del()" formaction="/notice/<%= rows[0].no %>?_method=DELETE" />
                     </div>
                 </form>
                 <% } %>
